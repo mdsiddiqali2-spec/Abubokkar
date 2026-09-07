@@ -1,1224 +1,835 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Md Siddiq Ali | Illustrator & Visual Artist</title>
-    <!-- Tailwind CSS -->
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Abdullah Hazari - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome for Premium Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Editorial Serif and Clean Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     
-    <!-- React & Babel for Single-File Reactive UI -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <!-- Tailwind Custom Configuration -->
     <script>
         tailwind.config = {
-            darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        gallery: {
-                            // Warm Minimalist Cream Theme
-                            cream: '#fbfaf7',
-                            charcoal: '#1a1a1a',
-                            darkbg: '#121212',
-                            borderLight: '#eae8e3',
-                            borderDark: '#2a2a2a',
-                            accent: '#af7c44', // Elegant warm ochre/gold
-                            accentHover: '#8e6233'
-                        }
-                    },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif']
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        primary: '#1a56db',
+                        primaryDark: '#1e429f',
+                        primaryLight: '#3f83f8',
+                        offwhite: '#f8fafc',
+                        offwhite2: '#f1f5f9',
                     }
                 }
             }
         }
     </script>
-
+    
     <style>
-        /* Custom Fine-art Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .light ::-webkit-scrollbar-thumb {
-            background: #eae8e3;
-            border-radius: 3px;
-        }
-        .dark ::-webkit-scrollbar-thumb {
-            background: #2a2a2a;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #af7c44;
-        }
-
-        /* Smooth page Transitions */
-        .fade-enter {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        .fade-enter-active {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 400ms, transform 400ms;
-        }
-
-        /* Grid transition and spacing */
-        .grid-item {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        /* Image hover reveal effect */
-        .hover-reveal-container {
-            position: relative;
-            overflow: hidden;
-        }
-        .hover-reveal-image {
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s ease;
-        }
-        .hover-reveal-container:hover .hover-reveal-image-detail {
-            opacity: 1;
-            transform: scale(1.05);
-        }
-        .hover-reveal-container:hover .hover-reveal-image-base {
-            opacity: 0;
-        }
+        body { font-family: 'Inter', sans-serif; font-weight: 400; background: #f8fafc; }
+        h1,h2,h3,h4,.serif-font { font-family: 'Playfair Display', serif; }
+        ::-webkit-scrollbar { width:5px; height:5px; }
+        ::-webkit-scrollbar-track { background:#f1f5f9; }
+        ::-webkit-scrollbar-thumb { background:#1a56db; border-radius:10px; }
+        .portfolio-item { transition: all 0.4s cubic-bezier(0.165,0.84,0.44,1); }
+        .portfolio-item:hover img { transform:scale(1.08); }
+        .sidebar-link { color:#94a3b8; letter-spacing:0.12em; font-size:0.7rem; font-weight:600; padding:0.5rem 0; border-bottom:1px solid transparent; transition:all 0.25s; display:block; }
+        .sidebar-link:hover, .sidebar-link.active { color:#60a5fa; border-bottom-color:#1a56db; }
+        .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.4s ease; }
+        .accordion-content.open { max-height:600px; }
+        .accordion-chevron { transition:transform 0.3s ease; }
+        .accordion-chevron.rotated { transform:rotate(180deg); }
+        .hero-slide { position:absolute; inset:0; transition:opacity 1s ease; }
+        #work-detail-overlay { transform:translateX(100%); transition:transform 0.5s cubic-bezier(0.165,0.84,0.44,1); }
+        #work-detail-overlay.open { transform:translateX(0); }
+        #blog-reader { transform:translateX(100%); transition:transform 0.5s cubic-bezier(0.165,0.84,0.44,1); }
+        #blog-reader.open { transform:translateX(0); }
+        #sidebar { background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%); }
+        .stats-section { background: linear-gradient(135deg, #1e3a8a 0%, #1a56db 60%, #0ea5e9 100%); }
+        .timeline-line { border-left:2px solid #e2e8f0; }
+        .blog-card { transition:transform 0.3s ease, box-shadow 0.3s ease; }
+        .blog-card:hover { transform:translateY(-4px); box-shadow:0 20px 40px rgba(26,86,219,0.1); }
+        .contact-card { transition:transform 0.25s ease, box-shadow 0.25s ease; }
+        .contact-card:hover { atransform:translateY(-3px); box-shadow:0 10px 25px rgba(26,86,219,0.12); }
+        .profile-ring {background: #a7d5ee;}
+        .portfolio-item.hidden-item { display:none; }
+        #toast-message { transition:all 0.3s ease; }
+        .section-label { letter-spacing:0.25em; font-size:0.7rem; text-transform:uppercase; color:#64748b; font-weight:700; }
+        .skill-bar { background: #e2e8f0; }
     </style>
 </head>
-<body class="bg-gallery-cream text-gallery-charcoal font-sans antialiased selection:bg-gallery-accent selection:text-white transition-colors duration-300">
+<body class="bg-offwhite text-slate-600 antialiased overflow-x-hidden">
 
-    <!-- React App Root Container -->
-    <div id="root"></div>
+<!-- SIDEBAR -->
+<aside id="sidebar" class="fixed top-0 left-0 h-screen w-72 z-40 flex flex-col justify-between py-10 px-7 transition-transform duration-300 -translate-x-full lg:translate-x-0 overflow-y-auto">
+    <div class="text-center">
+        <div class="profile-ring w-[148px] h-[148px] mx-auto mb-6 rounded-full p-[3px] shadow-xl">
+            <div class="w-full h-full rounded-full overflow-hidden border-2 border-slate-800">
+                <img alt="Abdullah Hazari" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/300x300/1a56db/ffffff?text=AH'" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgmmiM-44onpFnAuPigCtHvgFd0Wru480PX4ocytRcwE5hmp6MYvEX3FxuivqA3mdyjvpIuH-MVgpw2E3Rb-8pd66FTBsnC6jWqw9k5OqTEMABohyphenhyphenNWb0gTR8PLiNiaI7RIuAPKRwKw96vsgr6fIsWt60lY7qh5dZG0ZLkLMwxB0gr3LvpaScW9ZVItLP8/s16000/7.png"/>
+            </div>
+        </div>
+        <h1 class="text-xl font-bold text-white leading-tight tracking-wide">Abdullah Hazari</h1>
+        <span class="block mt-2 text-[10px] font-semibold tracking-[0.2em] uppercase text-blue-400">Digital Marketing Professional</span>
+        <div class="my-7 h-px bg-white/10"></div>
+        <nav>
+            <ul class="flex flex-col space-y-0.5">
+                <li><a class="sidebar-link" href="#home" onclick="closeSidebarMobile()">Home</a></li>
+                <li><a class="sidebar-link" href="#about" onclick="closeSidebarMobile()">About</a></li>
+                <li><a class="sidebar-link" href="#services" onclick="closeSidebarMobile()">Services</a></li>
+                <li><a class="sidebar-link" href="#skills" onclick="closeSidebarMobile()">Skills</a></li>
+                <li><a class="sidebar-link" href="#education" onclick="closeSidebarMobile()">Education</a></li>
+                <li><a class="sidebar-link" href="#experience" onclick="closeSidebarMobile()">Experience</a></li>
+                <li><a class="sidebar-link" href="#work" onclick="closeSidebarMobile()">Work</a></li>
+                <li><a class="sidebar-link" href="#blog" onclick="closeSidebarMobile()">Blog</a></li>
+                <li><a class="sidebar-link" href="#contact" onclick="closeSidebarMobile()">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+    <div class="mt-auto pt-8 text-center">
+        <div class="h-px bg-white/10 mb-6"></div>
+        <div class="flex justify-center gap-5 mb-5">
+            <a class="text-slate-400 hover:text-blue-400 transition text-sm" href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+            <a class="text-slate-400 hover:text-blue-400 transition text-sm" href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+            <a class="text-slate-400 hover:text-blue-400 transition text-sm" href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            <a class="text-slate-400 hover:text-blue-400 transition text-sm" href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            <a class="text-slate-400 hover:text-blue-400 transition text-sm" href="https://x.com" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        </div>
+        <p class="text-[10px] text-slate-500 tracking-wider">&#169; 2026 Abdullah Hazari</p>
+        <p class="text-[10px] text-slate-500 mt-0.5">Created by <span class="text-white font-semibold">Creatorium</span></p>
+    </div>
+</aside>
 
-    <script type="text/babel">
-        const { useState, useEffect } = React;
+<!-- Mobile Toggle -->
+<div class="lg:hidden fixed top-5 right-5 z-50">
+    <button id="hamburger-btn" aria-label="Toggle Menu" class="bg-primary text-white p-3 rounded-full shadow-lg focus:outline-none transition-all active:scale-95">
+        <i class="fa-solid fa-bars text-base"></i>
+    </button>
+</div>
+<div class="fixed inset-0 bg-black/50 z-30 hidden lg:hidden" id="sidebar-overlay"></div>
 
-        // --- MOCK WORKS DATA (Reflecting Zach's Moody, Textured Charcoal & Editorial Portrait Styles) ---
-        const PORTFOLIO_WORKS = [
-            {
-                id: 1,
-                title: "The Anatomy of Solitude",
-                category: "editorial",
-                client: "The New York Times",
-                year: "2025",
-                medium: "Charcoal, Pastel & Fine Graphite",
-                size: "18\" x 24\"",
-                image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=1200&auto=format&fit=crop&q=80",
-                description: "An editorial piece commissioned for the NYT Sunday Review, exploring the complex mental landscapes of modern isolation. The texture blends traditional heavy charcoal strokes with digital ambient lighting to capture psychological weight."
-            },
-            {
-                id: 2,
-                title: "Silent Symphony of Portland",
-                category: "portraiture",
-                client: "Adweek Magazine",
-                year: "2025",
-                medium: "Pencil & Digital Mixed Media",
-                size: "16\" x 20\"",
-                image: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=1200&auto=format&fit=crop&q=80",
-                description: "Part of a portrait series profiling creative visionaries navigating the changing landscape of urban environments. Emphasizes fine-line detailing with warm, emotional underlayers."
-            },
-            {
-                id: 3,
-                title: "The Surrealist's Sorrow",
-                category: "narrative",
-                client: "HarperCollins Books",
-                year: "2024",
-                medium: "Oil, Textured Charcoal on Board",
-                size: "20\" x 24\"",
-                image: "https://images.unsplash.com/photo-1580136579312-94651dfd596d?w=1200&auto=format&fit=crop&q=80",
-                description: "Book cover illustration for an anthology of dark-surreal poetry. Focuses on the physical weight of grief translated into detailed, dreamlike architecture."
-            },
-            {
-                id: 4,
-                title: "Whispers in the Dark Wood",
-                category: "personal",
-                client: "Fine Art Print Solo Gallery",
-                year: "2026",
-                medium: "Traditional Woodcut & Ink Wash",
-                size: "12\" x 16\"",
-                image: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=1200&auto=format&fit=crop&q=80",
-                description: "A personal exploration of traditional hand-etched woodblock techniques coupled with rich dark ink washes, focusing on folklore and mystical natural entities."
-            },
-            {
-                id: 5,
-                title: "The Digital Disconnect",
-                category: "editorial",
-                client: "Wired Magazine",
-                year: "2025",
-                medium: "Digital Painting & Textured Overlay",
-                size: "18\" x 24\"",
-                image: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=1200&auto=format&fit=crop&q=80",
-                description: "An editorial illustration visualizing the subtle psychological separation experienced through constant virtual communication versus physical human connection."
-            },
-            {
-                id: 6,
-                title: "The Alchemist's Monologue",
-                category: "portraiture",
-                client: "Smithsonian Magazine",
-                year: "2024",
-                medium: "Pencil & Digital Color Gradient",
-                size: "15\" x 18\"",
-                image: "https://images.unsplash.com/photo-1541701494587-cb58502866ab?w=1200&auto=format&fit=crop&q=80",
-                description: "A highly detailed historical portrait exploring the beautiful transition from magical superstition to rigorous scientific inquiry in medieval times."
-            },
-            {
-                id: 7,
-                title: "The Echo Chamber Paradox",
-                category: "narrative",
-                client: "The Los Angeles Times",
-                year: "2025",
-                medium: "Charcoal Dust & Gesso on Linen",
-                size: "24\" x 30\"",
-                image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=1200&auto=format&fit=crop&q=80",
-                description: "Narrative illustration of modern echo chambers. Overlapping visual feedback loops are physically represented on canvas using heavy charcoal powder and hand-applied gesso."
-            },
-            {
-                id: 8,
-                title: "Fragments of Childhood Dreams",
-                category: "personal",
-                client: "Museum of Modern Art (MoMA) Showcase",
-                year: "2026",
-                medium: "Graphite Pencil & Gilded Gold Leaf",
-                size: "20\" x 20\"",
-                image: "https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=1200&auto=format&fit=crop&q=80",
-                description: "A personal project depicting the fluid, decaying nature of distant memories, accented with genuine hand-gilded 24k gold leaf details that shift under lighting."
-            }
-        ];
+<!-- MAIN CONTENT -->
+<main class="lg:ml-72 min-h-screen">
 
-        // --- SHOP ITEMS (Featuring Texture-Hover Preview Images) ---
-        const STORE_ITEMS = [
-            {
-                id: "item-1",
-                title: "The Anatomy of Solitude",
-                type: "Screen Print",
-                price: 85.00,
-                size: "18\" x 24\" Hand-Pulled",
-                image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?w=800&auto=format&fit=crop&q=80",
-                hoverImage: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=800&auto=format&fit=crop&q=80", // detailed close-up
-                description: "4-color hand-pulled screen print on 100lb acid-free French Paper. Signed, numbered, and dated in a limited edition of 100."
-            },
-            {
-                id: "item-2",
-                title: "Shadows of Portland",
-                type: "Fine Art Giclée Print",
-                price: 65.00,
-                size: "16\" x 20\" Archival Print",
-                image: "https://images.unsplash.com/photo-1579783928586-3f350c33659c?w=800&auto=format&fit=crop&q=80",
-                hoverImage: "https://images.unsplash.com/photo-1579783928621-7a13d66a62d1?w=800&auto=format&fit=crop&q=80",
-                description: "Archival pigment print on heavy museum-grade cotton rag paper. Fully authorized limited studio edition with certificate of authenticity."
-            },
-            {
-                id: "item-3",
-                title: "Whispers of the Wood (Vol. I)",
-                type: "Self-Published Comic & Zine",
-                price: 18.00,
-                size: "A5, 36 Pages, Perfect Bound",
-                image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=800&auto=format&fit=crop&q=80",
-                hoverImage: "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=800&auto=format&fit=crop&q=80",
-                description: "A beautifully designed narrative compilation of dark fantasy sketches, folklore insights, and graphite experiments. Printed on custom high-texture recycled stock."
-            },
-            {
-                id: "item-4",
-                title: "Grief & Grace Skate Deck",
-                type: "Hand-Painted Hardwood Deck",
-                price: 240.00,
-                size: "8.25\" Premium Canadian Maple",
-                image: "https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=800&auto=format&fit=crop&q=80",
-                hoverImage: "https://images.unsplash.com/photo-1580136579312-94651dfd596d?w=800&auto=format&fit=crop&q=80",
-                description: "A fully functional rideable skate deck or exquisite wall display. Features a hand-transferred design with beautiful protective matte finish. Hand-signed by Md Siddiq Ali."
-            }
-        ];
-
-        // --- STREAMING_CHUNK: Rendering the Main App Structure ---
-        function App() {
-            const [activeSection, setActiveSection] = useState('work'); // 'work', 'about', 'store', 'contact'
-            const [categoryFilter, setCategoryFilter] = useState('all');
-            const [selectedWork, setSelectedWork] = useState(null); // Lightbox State
-            const [cart, setCart] = useState([]);
-            const [isCartOpen, setIsCartOpen] = useState(false);
-            const [darkMode, setDarkMode] = useState(false);
-            const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
-            // --- CONTACT FORM STATE ---
-            const [formSubmitted, setFormSubmitted] = useState(false);
-            const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
-
-            // --- CHECKOUT SIMULATOR STATE ---
-            const [checkoutStep, setCheckoutStep] = useState('cart'); // 'cart', 'shipping', 'payment', 'success'
-            const [couponCode, setCouponCode] = useState('');
-            const [discount, setDiscount] = useState(0);
-
-            // Toggle Dark Mode
-            useEffect(() => {
-                const root = window.document.documentElement;
-                if (darkMode) {
-                    root.classList.add('dark');
-                    root.classList.remove('light');
-                } else {
-                    root.classList.add('light');
-                    root.classList.remove('dark');
-                }
-            }, [darkMode]);
-
-            // Keyboard navigation for Lightbox
-            useEffect(() => {
-                const handleKeyDown = (e) => {
-                    if (!selectedWork) return;
-                    const filtered = getFilteredWorks();
-                    const currentIndex = filtered.findIndex(w => w.id === selectedWork.id);
-
-                    if (e.key === 'Escape') {
-                        setSelectedWork(null);
-                    } else if (e.key === 'ArrowRight') {
-                        const nextIndex = (currentIndex + 1) % filtered.length;
-                        setSelectedWork(filtered[nextIndex]);
-                    } else if (e.key === 'ArrowLeft') {
-                        const prevIndex = (currentIndex - 1 + filtered.length) % filtered.length;
-                        setSelectedWork(filtered[prevIndex]);
-                    }
-                };
-
-                window.addEventListener('keydown', handleKeyDown);
-                return () => window.removeEventListener('keydown', handleKeyDown);
-            }, [selectedWork, categoryFilter]);
-
-            const getFilteredWorks = () => {
-                if (categoryFilter === 'all') return PORTFOLIO_WORKS;
-                return PORTFOLIO_WORKS.filter(w => w.category === categoryFilter);
-            };
-
-            // Cart Actions
-            const addToCart = (product) => {
-                const existingItem = cart.find(item => item.id === product.id);
-                if (existingItem) {
-                    setCart(cart.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item));
-                } else {
-                    setCart([...cart, { ...product, quantity: 1 }]);
-                }
-                setIsCartOpen(true);
-            };
-
-            const removeFromCart = (id) => {
-                setCart(cart.filter(item => item.id !== id));
-            };
-
-            const updateCartQuantity = (id, delta) => {
-                setCart(cart.map(item => {
-                    if (item.id === id) {
-                        const newQty = item.quantity + delta;
-                        return newQty > 0 ? { ...item, quantity: newQty } : item;
-                    }
-                    return item;
-                }).filter(item => item.quantity > 0));
-            };
-
-            const applyCoupon = () => {
-                if (couponCode.toUpperCase() === 'ARTIST10') {
-                    setDiscount(0.10); // 10% off
-                } else {
-                    setDiscount(0);
-                }
-            };
-
-            const handleContactSubmit = (e) => {
-                e.preventDefault();
-                setFormSubmitted(true);
-                setTimeout(() => {
-                    setFormData({ name: '', email: '', subject: '', message: '' });
-                }, 500);
-            };
-
-            const totalCartItems = cart.reduce((acc, item) => acc + item.quantity, 0);
-            const cartSubtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-            const finalTotal = cartSubtotal - (cartSubtotal * discount);
-
-            return (
-                <div className={`min-h-screen ${darkMode ? 'bg-gallery-darkbg text-gray-200' : 'bg-gallery-cream text-gallery-charcoal'} flex flex-col md:flex-row transition-colors duration-300`}>
-                    
-                    {/* --- MOBILE STICKY NAVIGATION BAR --- */}
-                    <header className={`md:hidden sticky top-0 z-40 flex items-center justify-between px-6 py-4 border-b ${darkMode ? 'bg-gallery-darkbg/95 border-gallery-borderDark' : 'bg-gallery-cream/95 border-gallery-borderLight'} backdrop-blur-md`}>
-                        <div>
-                            <span onClick={() => { setActiveSection('work'); setCategoryFilter('all'); }} className="font-serif text-xl font-bold tracking-tight cursor-pointer">
-                                Md Siddiq Ali
-                            </span>
-                            <span className="block text-[10px] uppercase tracking-widest text-gallery-accent mt-0.5 font-medium">Illustrator</span>
-                        </div>
-                        <div className="flex items-center space-x-4">
-                            {/* Theme Toggle */}
-                            <button onClick={() => setDarkMode(!darkMode)} className="p-2 rounded-full focus:outline-none hover:bg-gallery-accent/10 transition-colors">
-                                <i className={`fa-solid ${darkMode ? 'fa-sun text-yellow-400' : 'fa-moon text-gallery-accent'}`}></i>
-                            </button>
-                            {/* Shopping Cart Indicator */}
-                            <button onClick={() => setIsCartOpen(true)} className="relative p-2 rounded-full hover:bg-gallery-accent/10 transition-colors">
-                                <i className="fa-solid fa-shopping-bag"></i>
-                                {totalCartItems > 0 && (
-                                    <span className="absolute top-0 right-0 w-4 h-4 bg-gallery-accent text-white rounded-full text-[9px] flex items-center justify-center font-bold">
-                                        {totalCartItems}
-                                    </span>
-                                )}
-                            </button>
-                            {/* Menu Button */}
-                            <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)} className="p-2 text-xl focus:outline-none">
-                                <i className={`fa-solid ${isMobileMenuOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
-                            </button>
-                        </div>
-                    </header>
-
-                    {/* --- MOBILE MENU OVERLAY --- */}
-                    {isMobileMenuOpen && (
-                        <div className={`md:hidden fixed inset-0 top-[65px] z-30 flex flex-col p-8 space-y-6 ${darkMode ? 'bg-gallery-darkbg/98 text-white' : 'bg-gallery-cream/98 text-gallery-charcoal'} animate-fade`}>
-                            <nav className="flex flex-col space-y-4 text-lg font-medium">
-                                <button 
-                                    onClick={() => { setActiveSection('work'); setCategoryFilter('all'); setIsMobileMenuOpen(false); }}
-                                    className={`text-left pb-1 border-b ${activeSection === 'work' ? 'text-gallery-accent border-gallery-accent' : 'border-transparent'}`}
-                                >
-                                    Work
-                                </button>
-                                <div className="pl-4 flex flex-col space-y-2 text-sm text-gray-500">
-                                    {['all', 'editorial', 'portraiture', 'narrative', 'personal'].map((cat) => (
-                                        <button 
-                                            key={cat}
-                                            onClick={() => { setActiveSection('work'); setCategoryFilter(cat); setIsMobileMenuOpen(false); }}
-                                            className={`text-left capitalize ${categoryFilter === cat && activeSection === 'work' ? 'text-gallery-accent font-semibold' : ''}`}
-                                        >
-                                            {cat}
-                                        </button>
-                                    ))}
-                                </div>
-                                <button 
-                                    onClick={() => { setActiveSection('about'); setIsMobileMenuOpen(false); }}
-                                    className={`text-left pb-1 border-b ${activeSection === 'about' ? 'text-gallery-accent border-gallery-accent' : 'border-transparent'}`}
-                                >
-                                    About
-                                </button>
-                                <button 
-                                    onClick={() => { setActiveSection('store'); setIsMobileMenuOpen(false); }}
-                                    className={`text-left pb-1 border-b ${activeSection === 'store' ? 'text-gallery-accent border-gallery-accent' : 'border-transparent'}`}
-                                >
-                                    Store
-                                </button>
-                                <button 
-                                    onClick={() => { setActiveSection('contact'); setIsMobileMenuOpen(false); }}
-                                    className={`text-left pb-1 border-b ${activeSection === 'contact' ? 'text-gallery-accent border-gallery-accent' : 'border-transparent'}`}
-                                >
-                                    Contact
-                                </button>
-                            </nav>
-
-                            <div className="flex space-x-6 pt-6 border-t border-gray-200 dark:border-gallery-borderDark">
-                                <a href="https://instagram.com" target="_blank" className="hover:text-gallery-accent transition-colors text-xl"><i className="fa-brands fa-instagram"></i></a>
-                                <a href="https://behance.net" target="_blank" className="hover:text-gallery-accent transition-colors text-xl"><i className="fa-brands fa-behance"></i></a>
-                                <a href="mailto:siddiq@illustration.com" className="hover:text-gallery-accent transition-colors text-xl"><i className="fa-regular fa-envelope"></i></a>
-                            </div>
-                        </div>
-                    )}
-
-                    {/* --- STREAMING_CHUNK: Styling and Rendering Sidebar --- */}
-                    {/* --- DESKTOP SIDEBAR --- */}
-                    <aside className={`hidden md:flex flex-col justify-between w-[280px] h-screen fixed left-0 top-0 p-10 border-r transition-colors duration-300 ${darkMode ? 'bg-[#0f0f0f] border-gallery-borderDark' : 'bg-gallery-cream border-gallery-borderLight'}`}>
-                        {/* Header & Logo */}
-                        <div className="space-y-10">
-                            <div>
-                                <h1 onClick={() => { setActiveSection('work'); setCategoryFilter('all'); }} className="font-serif text-[28px] font-bold leading-tight tracking-tight cursor-pointer hover:text-gallery-accent transition-colors">
-                                    Md Siddiq Ali
-                                </h1>
-                                <p className="text-[11px] uppercase tracking-widest text-gallery-accent font-semibold mt-1">
-                                    Illustrator & Visual Artist
-                                </p>
-                            </div>
-
-                            {/* Main Navigation */}
-                            <nav className="flex flex-col space-y-3 text-[14px]">
-                                <div className="space-y-1">
-                                    <button 
-                                        onClick={() => { setActiveSection('work'); }} 
-                                        className={`font-semibold tracking-wider hover:text-gallery-accent transition-colors ${activeSection === 'work' ? 'text-gallery-accent' : ''}`}
-                                    >
-                                        WORK
-                                    </button>
-                                    
-                                    {/* Nested Category Filter */}
-                                    <div className="pl-3 py-1 flex flex-col space-y-1.5 border-l border-gallery-accent/20">
-                                        {['all', 'editorial', 'portraiture', 'narrative', 'personal'].map((cat) => (
-                                            <button 
-                                                key={cat}
-                                                onClick={() => { setActiveSection('work'); setCategoryFilter(cat); }}
-                                                className={`text-left text-[12px] capitalize hover:text-gallery-accent transition-all ${
-                                                    activeSection === 'work' && categoryFilter === cat 
-                                                    ? 'text-gallery-accent font-semibold translate-x-1' 
-                                                    : 'text-gray-500 dark:text-gray-400'
-                                                }`}
-                                            >
-                                                {cat}
-                                            </button>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <button 
-                                    onClick={() => setActiveSection('about')} 
-                                    className={`text-left font-semibold tracking-wider hover:text-gallery-accent transition-colors pt-2 ${activeSection === 'about' ? 'text-gallery-accent' : ''}`}
-                                >
-                                    ABOUT & CLIENTS
-                                </button>
-
-                                <button 
-                                    onClick={() => setActiveSection('store')} 
-                                    className={`text-left font-semibold tracking-wider hover:text-gallery-accent transition-colors ${activeSection === 'store' ? 'text-gallery-accent' : ''}`}
-                                >
-                                    STORE
-                                </button>
-
-                                <button 
-                                    onClick={() => setActiveSection('contact')} 
-                                    className={`text-left font-semibold tracking-wider hover:text-gallery-accent transition-colors ${activeSection === 'contact' ? 'text-gallery-accent' : ''}`}
-                                >
-                                    CONTACT
-                                </button>
-                            </nav>
-                        </div>
-
-                        {/* Sidebar Footer & Widgets */}
-                        <div className="space-y-6">
-                            {/* Dark Mode Switcher */}
-                            <div className="flex items-center space-x-2">
-                                <button 
-                                    onClick={() => setDarkMode(!darkMode)} 
-                                    className={`w-10 h-5 flex items-center rounded-full p-0.5 duration-300 cursor-pointer ${darkMode ? 'bg-gallery-accent' : 'bg-gray-300'}`}
-                                >
-                                    <div className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${darkMode ? 'translate-x-5' : ''}`}></div>
-                                </button>
-                                <span className="text-[11px] font-semibold uppercase tracking-wider text-gray-500">
-                                    {darkMode ? 'Dark Light' : 'Minimal Light'}
-                                </span>
-                            </div>
-
-                            {/* Cart Indicator */}
-                            {totalCartItems > 0 && (
-                                <button onClick={() => setIsCartOpen(true)} className="flex items-center space-x-2 px-3 py-1.5 rounded-full bg-gallery-accent/10 border border-gallery-accent/20 hover:bg-gallery-accent/20 transition-all text-[12px] font-semibold text-gallery-accent">
-                                    <i className="fa-solid fa-shopping-bag"></i>
-                                    <span>CART ({totalCartItems})</span>
-                                </button>
-                            )}
-
-                            {/* Social Icons & Copyright */}
-                            <div className="space-y-2">
-                                <div className="flex space-x-4">
-                                    <a href="https://instagram.com" target="_blank" className="text-gray-500 hover:text-gallery-accent transition-colors text-sm"><i className="fa-brands fa-instagram"></i></a>
-                                    <a href="https://behance.net" target="_blank" className="text-gray-500 hover:text-gallery-accent transition-colors text-sm"><i className="fa-brands fa-behance"></i></a>
-                                    <a href="mailto:siddiq@illustration.com" className="text-gray-500 hover:text-gallery-accent transition-colors text-sm"><i className="fa-regular fa-envelope"></i></a>
-                                </div>
-                                <div className="text-[10px] text-gray-400 font-medium">
-                                    &copy; {new Date().getFullYear()} Md Siddiq Ali. <br/>All Rights Reserved.
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-
-                    {/* --- MAIN CONTENT AREA --- */}
-                    <main className="flex-1 md:ml-[280px] p-6 md:p-14 transition-all duration-300">
-                        
-                        {/* --- WORK VIEW --- */}
-                        {activeSection === 'work' && (
-                            <div className="animate-fade">
-                                <div className="mb-8 hidden md:flex items-center justify-between">
-                                    <span className="text-[11px] uppercase tracking-widest font-semibold text-gray-400">
-                                        Showing: <span className="text-gallery-accent">{categoryFilter}</span> collection
-                                    </span>
-                                </div>
-
-                                {/* Responsive Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-                                    {getFilteredWorks().map((work) => (
-                                        <div 
-                                            key={work.id} 
-                                            onClick={() => setSelectedWork(work)}
-                                            className="grid-item group cursor-pointer overflow-hidden rounded-lg relative"
-                                        >
-                                            <div className="aspect-[4/5] bg-gray-100 dark:bg-[#1a1a1a] relative overflow-hidden rounded-lg border border-transparent hover:border-gallery-accent/20 transition-all duration-300">
-                                                <img 
-                                                    src={work.image} 
-                                                    alt={work.title} 
-                                                    loading="lazy"
-                                                    className="w-full h-full object-cover transform duration-500 ease-out group-hover:scale-105"
-                                                    onError={(e) => {
-                                                        e.target.onerror = null;
-                                                        e.target.src = `https://placehold.co/600x750/af7c44/ffffff?text=${encodeURIComponent(work.title)}`;
-                                                    }}
-                                                />
-                                                {/* Sophisticated Hover Information Overlay */}
-                                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6 text-white">
-                                                    <p className="text-[10px] uppercase tracking-widest text-gallery-accent font-semibold mb-1">{work.client}</p>
-                                                    <h3 className="font-serif text-lg md:text-xl font-bold leading-tight">{work.title}</h3>
-                                                    <p className="text-[11px] text-gray-300 mt-2 font-medium"><i className="fa-solid fa-paintbrush mr-1.5"></i>{work.medium}</p>
-                                                </div>
-                                            </div>
-                                            {/* Static mobile subtitle details */}
-                                            <div className="mt-3 md:hidden">
-                                                <h4 className="font-serif text-base font-bold">{work.title}</h4>
-                                                <p className="text-[11px] text-gray-500 uppercase tracking-widest mt-0.5">{work.client} &bull; {work.year}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* --- STREAMING_CHUNK: About and Clients Section Setup --- */}
-                        {/* --- ABOUT & CLIENTS VIEW --- */}
-                        {activeSection === 'about' && (
-                            <div className="max-w-4xl mx-auto animate-fade space-y-12 md:space-y-16">
-                                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
-                                    {/* Artist Portrait */}
-                                    <div className="md:col-span-5">
-                                        <div className="aspect-[3/4] bg-gray-200 dark:bg-[#1e1e1e] rounded-lg overflow-hidden border border-gallery-borderLight dark:border-gallery-borderDark relative group">
-                                            <img 
-                                                src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=800&auto=format&fit=crop&q=80" 
-                                                alt="Md Siddiq Ali portrait" 
-                                                className="w-full h-full object-cover object-center grayscale hover:grayscale-0 transition-all duration-700"
-                                                onError={(e) => {
-                                                    e.target.onerror = null;
-                                                    e.target.src = "https://placehold.co/400x533/af7c44/ffffff?text=Md+Siddiq+Ali";
-                                                }}
-                                            />
-                                            <div className="absolute inset-0 border-2 border-gallery-accent/20 m-3 rounded-md pointer-events-none"></div>
-                                        </div>
-                                    </div>
-
-                                    {/* Story and Bio */}
-                                    <div className="md:col-span-7 space-y-6">
-                                        <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-tight">
-                                            Md Siddiq Ali
-                                        </h2>
-                                        <p className="text-[13px] uppercase tracking-widest text-gallery-accent font-bold">
-                                            Illustrator, Educator & Printmaker based in Portland, Oregon.
-                                        </p>
-                                        <p className="leading-relaxed text-sm md:text-base text-gray-600 dark:text-gray-300">
-                                            Md Siddiq Ali is an award-winning visual storyteller specializing in rich, highly-textured editorial illustrations and narrative visual concepts. Utilizing traditional media such as compressed charcoal, soft pastels, fine graphite, and manual woodblock printmaking alongside high-fidelity digital rendering, his works delve deeply into emotional realism, melancholy, and dreamlike surrealism.
-                                        </p>
-                                        <p className="leading-relaxed text-sm md:text-base text-gray-600 dark:text-gray-300">
-                                            He holds an MFA with Honors from the School of Visual Arts (SVA) and is currently directing advanced illustration coursework at the Pacific Northwest College of Art. His creative philosophy centers on bringing organic tactile sensations into digital editorial designs.
-                                        </p>
-                                        
-                                        <div className="pt-4 flex flex-wrap gap-4">
-                                            <button onClick={() => setActiveSection('contact')} className="px-5 py-2.5 rounded-md bg-gallery-accent text-white text-[12px] uppercase tracking-widest font-semibold hover:bg-gallery-accentHover transition-colors">
-                                                Inquire Commission
-                                            </button>
-                                            <a href="#cv-clients" className="px-5 py-2.5 rounded-md border border-gallery-accent/20 hover:border-gallery-accent hover:text-gallery-accent transition-all text-[12px] uppercase tracking-widest font-semibold">
-                                                Read Client List
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Clients Grid Block */}
-                                <div id="cv-clients" className="pt-8 border-t border-gallery-borderLight dark:border-gallery-borderDark space-y-8">
-                                    <h3 className="font-serif text-2xl font-bold">Select Clients</h3>
-                                    
-                                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 text-sm text-gray-600 dark:text-gray-400">
-                                        {[
-                                            "The New York Times", "Vogue Magazine", "Smithsonian Magazine", "HarperCollins",
-                                            "Playboy Enterprises", "The Los Angeles Times", "Wired Magazine", "Adweek",
-                                            "Rockstar Games", "Random House", "Penguin Books", "Pacific Northwest Art"
-                                        ].map((client, i) => (
-                                            <div key={i} className={`p-4 rounded-md border ${darkMode ? 'border-gallery-borderDark bg-[#161616]' : 'border-gallery-borderLight bg-white'} hover:border-gallery-accent/40 transition-colors flex items-center`}>
-                                                <span className="font-medium">{client}</span>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Recognition Block */}
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 border-t border-gallery-borderLight dark:border-gallery-borderDark">
-                                    <div className="space-y-4">
-                                        <h4 className="font-serif text-xl font-bold">Awards & Recognition</h4>
-                                        <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                                            <li>&bull; <strong className="text-gallery-accent">Society of Illustrators</strong> - Gold Medal (2025)</li>
-                                            <li>&bull; <strong className="text-gallery-accent">American Illustration 43</strong> - Selected Winner (2024)</li>
-                                            <li>&bull; <strong className="text-gallery-accent">Communication Arts</strong> - Excellence in Illustration (2024)</li>
-                                            <li>&bull; <strong className="text-gallery-accent">MFA Illustration with Honors</strong> - School of Visual Arts (2023)</li>
-                                        </ul>
-                                    </div>
-                                    <div className="space-y-4">
-                                        <h4 className="font-serif text-xl font-bold">Lectures & Teachings</h4>
-                                        <ul className="space-y-3 text-sm text-gray-600 dark:text-gray-400">
-                                            <li>&bull; <strong className="text-gallery-accent">PNCA</strong> - Adjunct Professor (Illustration & Comic Art)</li>
-                                            <li>&bull; <strong className="text-gallery-accent">SVA Summer Series</strong> - Guest Lecturer on Charcoal Techniques</li>
-                                            <li>&bull; <strong className="text-gallery-accent">Portland Art Museum</strong> - Visual Storytelling Workshop Leader</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
-                        {/* --- STREAMING_CHUNK: Setting Up the Interactive Shop View --- */}
-                        {/* --- STORE (SHOP) VIEW --- */}
-                        {activeSection === 'store' && (
-                            <div className="animate-fade space-y-10">
-                                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gallery-borderLight dark:border-gallery-borderDark pb-6">
-                                    <div>
-                                        <h2 className="font-serif text-3xl font-bold">The Collector's Shop</h2>
-                                        <p className="text-[12px] text-gray-500 dark:text-gray-400 mt-1">Limited-run print editions, custom merchandise and hand-drawn publication works.</p>
-                                    </div>
-                                    <div className="flex items-center space-x-3 text-[12px] bg-gallery-accent/10 text-gallery-accent px-4 py-2 rounded-md border border-gallery-accent/20">
-                                        <i className="fa-solid fa-circle-info"></i>
-                                        <span>Apply promo <strong className="underline">ARTIST10</strong> at checkout for 10% off.</span>
-                                    </div>
-                                </div>
-
-                                {/* Store Items Grid */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 md:gap-10">
-                                    {STORE_ITEMS.map((item) => (
-                                        <div 
-                                            key={item.id}
-                                            className="group flex flex-col justify-between"
-                                        >
-                                            {/* Double-Image Hover Reveal Container */}
-                                            <div className="hover-reveal-container aspect-[4/5] bg-gray-100 dark:bg-[#1a1a1a] rounded-lg overflow-hidden border border-gallery-borderLight dark:border-gallery-borderDark relative cursor-pointer shadow-sm">
-                                                {/* Normal Image */}
-                                                <img 
-                                                    src={item.image} 
-                                                    alt={item.title} 
-                                                    className="hover-reveal-image hover-reveal-image-base absolute inset-0 w-full h-full object-cover"
-                                                    onError={(e) => {
-                                                        e.target.onerror = null;
-                                                        e.target.src = `https://placehold.co/600x750/af7c44/ffffff?text=${encodeURIComponent(item.title)}`;
-                                                    }}
-                                                />
-                                                {/* Detailed Zoom-Hover Image */}
-                                                <img 
-                                                    src={item.hoverImage} 
-                                                    alt={`${item.title} detailed texture`} 
-                                                    className="hover-reveal-image hover-reveal-image-detail absolute inset-0 w-full h-full object-cover opacity-0"
-                                                    onError={(e) => {
-                                                        e.target.onerror = null;
-                                                        e.target.src = `https://placehold.co/600x750/1a1a1a/ffffff?text=Texture+Close+up`;
-                                                    }}
-                                                />
-                                                {/* Hover Detail Badge */}
-                                                <div className="absolute top-4 right-4 bg-black/70 text-white text-[9px] uppercase tracking-widest px-2 py-1 rounded-sm pointer-events-none group-hover:bg-gallery-accent duration-300">
-                                                    Hover for Texture Detail
-                                                </div>
-                                            </div>
-
-                                            {/* Details and Actions */}
-                                            <div className="mt-5 space-y-2">
-                                                <div className="flex items-start justify-between">
-                                                    <div>
-                                                        <h3 className="font-serif text-lg md:text-xl font-bold group-hover:text-gallery-accent transition-colors">
-                                                            {item.title}
-                                                        </h3>
-                                                        <p className="text-[11px] uppercase tracking-widest text-gray-500 font-semibold mt-0.5">
-                                                            {item.type} &bull; {item.size}
-                                                        </p>
-                                                    </div>
-                                                    <span className="font-serif text-lg font-bold text-gallery-accent">
-                                                        ${item.price.toFixed(2)}
-                                                    </span>
-                                                </div>
-                                                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
-                                                    {item.description}
-                                                </p>
-                                                <button 
-                                                    onClick={() => addToCart(item)}
-                                                    className="w-full mt-2 py-3 rounded-md bg-gallery-charcoal dark:bg-white text-white dark:text-gallery-charcoal text-[11px] font-semibold uppercase tracking-widest hover:bg-gallery-accent dark:hover:bg-gallery-accent dark:hover:text-white transition-colors duration-300 flex items-center justify-center space-x-2"
-                                                >
-                                                    <i className="fa-solid fa-shopping-cart text-[12px]"></i>
-                                                    <span>Add to cart</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* --- STREAMING_CHUNK: Setting Up the Interactive Contact Form --- */}
-                        {/* --- CONTACT VIEW --- */}
-                        {activeSection === 'contact' && (
-                            <div className="max-w-2xl mx-auto animate-fade space-y-10">
-                                <div>
-                                    <h2 className="font-serif text-3xl font-bold">Get in Touch</h2>
-                                    <p className="text-[12px] text-gray-500 dark:text-gray-400 mt-1">
-                                        For editorial commissions, gallery exhibits, or store-related help, please fill out the layout below.
-                                    </p>
-                                </div>
-
-                                {formSubmitted ? (
-                                    <div className="p-8 rounded-lg border border-emerald-500/20 bg-emerald-500/5 text-center space-y-4">
-                                        <div className="w-14 h-14 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto text-xl shadow-md">
-                                            <i className="fa-solid fa-check"></i>
-                                        </div>
-                                        <h3 className="font-serif text-xl font-bold text-emerald-600 dark:text-emerald-400">Message Sent Successfully!</h3>
-                                        <p className="text-sm text-gray-600 dark:text-gray-400 max-w-md mx-auto">
-                                            Thank you for reaching out. Md Siddiq Ali will get back to you within 24-48 hours.
-                                        </p>
-                                        <button 
-                                            onClick={() => setFormSubmitted(false)} 
-                                            className="px-5 py-2 rounded-md bg-gallery-accent text-white text-[11px] uppercase tracking-widest font-semibold hover:bg-gallery-accentHover transition-colors mt-2"
-                                        >
-                                            Send Another Message
-                                        </button>
-                                    </div>
-                                ) : (
-                                    <form onSubmit={handleContactSubmit} className="space-y-6">
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                            <div className="space-y-1.5">
-                                                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Your Name *</label>
-                                                <input 
-                                                    type="text" 
-                                                    required
-                                                    value={formData.name}
-                                                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                                                    placeholder="Md Siddiq Ali"
-                                                    className={`w-full px-4 py-3 rounded-md text-sm border focus:outline-none focus:border-gallery-accent transition-colors ${
-                                                        darkMode ? 'bg-[#181818] border-gallery-borderDark text-white' : 'bg-white border-gallery-borderLight'
-                                                    }`}
-                                                />
-                                            </div>
-                                            <div className="space-y-1.5">
-                                                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Email Address *</label>
-                                                <input 
-                                                    type="email" 
-                                                    required
-                                                    value={formData.email}
-                                                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                                                    placeholder="siddiq@example.com"
-                                                    className={`w-full px-4 py-3 rounded-md text-sm border focus:outline-none focus:border-gallery-accent transition-colors ${
-                                                        darkMode ? 'bg-[#181818] border-gallery-borderDark text-white' : 'bg-white border-gallery-borderLight'
-                                                    }`}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-1.5">
-                                            <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Subject</label>
-                                            <input 
-                                                type="text" 
-                                                value={formData.subject}
-                                                onChange={(e) => setFormData({...formData, subject: e.target.value})}
-                                                placeholder="Editorial Commission Query"
-                                                className={`w-full px-4 py-3 rounded-md text-sm border focus:outline-none focus:border-gallery-accent transition-colors ${
-                                                    darkMode ? 'bg-[#181818] border-gallery-borderDark text-white' : 'bg-white border-gallery-borderLight'
-                                                }`}
-                                            />
-                                        </div>
-
-                                        <div className="space-y-1.5">
-                                            <div className="flex justify-between items-center">
-                                                <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Message Content *</label>
-                                                <span className="text-[10px] text-gray-400">{formData.message.length}/1000 chars</span>
-                                            </div>
-                                            <textarea 
-                                                required
-                                                maxLength={1000}
-                                                rows={5}
-                                                value={formData.message}
-                                                onChange={(e) => setFormData({...formData, message: e.target.value})}
-                                                placeholder="Briefly describe your project details, budgets and deadlines..."
-                                                className={`w-full px-4 py-3 rounded-md text-sm border focus:outline-none focus:border-gallery-accent transition-colors ${
-                                                    darkMode ? 'bg-[#181818] border-gallery-borderDark text-white' : 'bg-white border-gallery-borderLight'
-                                                }`}
-                                            ></textarea>
-                                        </div>
-
-                                        <button 
-                                            type="submit"
-                                            className="w-full py-4 rounded-md bg-gallery-accent text-white text-[11px] font-semibold uppercase tracking-widest hover:bg-gallery-accentHover transition-colors duration-300"
-                                        >
-                                            Submit Message
-                                        </button>
-                                    </form>
-                                )}
-
-                                <div className="pt-8 border-t border-gallery-borderLight dark:border-gallery-borderDark flex flex-col sm:flex-row justify-between items-start gap-4">
-                                    <div>
-                                        <h4 className="font-serif font-bold text-base">Direct Contact Details</h4>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Email: <a href="mailto:siddiq@illustration.com" className="hover:text-gallery-accent transition-all font-semibold">siddiq@illustration.com</a></p>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">Phone: +1 (503) 489-0239 (Studio line)</p>
-                                    </div>
-                                    <div>
-                                        <h4 className="font-serif font-bold text-base">Studio Location</h4>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">981 Pearl Street, NW Pearl District</p>
-                                        <p className="text-sm text-gray-500 dark:text-gray-400">Portland, OR 97209</p>
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-                    </main>
-
-                    {/* --- STREAMING_CHUNK: Lightbox Artwork Modal Setup --- */}
-                    {/* --- IMMERSIVE LIGHTBOX / ARTWORK DETAIL VIEWER --- */}
-                    {selectedWork && (
-                        <div className="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm flex flex-col justify-between p-6 md:p-10 text-white animate-fade">
-                            {/* Lightbox Header Controls */}
-                            <div className="flex justify-between items-center w-full">
-                                <div>
-                                    <span className="text-[10px] uppercase tracking-widest font-semibold text-gallery-accent">{selectedWork.client}</span>
-                                    <h3 className="font-serif text-lg font-bold">{selectedWork.title}</h3>
-                                </div>
-                                <button 
-                                    onClick={() => setSelectedWork(null)}
-                                    className="p-3 text-xl hover:text-gallery-accent transition-colors"
-                                >
-                                    <i className="fa-solid fa-xmark"></i>
-                                </button>
-                            </div>
-
-                            {/* Main Slide / Image Detail Area */}
-                            <div className="flex-1 my-6 flex flex-col md:flex-row items-center justify-center gap-6 md:gap-12 overflow-hidden">
-                                {/* Next/Prev Nav Arrow Desktop (Left) */}
-                                <button 
-                                    onClick={() => {
-                                        const filtered = getFilteredWorks();
-                                        const idx = filtered.findIndex(w => w.id === selectedWork.id);
-                                        const prevIdx = (idx - 1 + filtered.length) % filtered.length;
-                                        setSelectedWork(filtered[prevIdx]);
-                                    }}
-                                    className="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-white/20 hover:border-gallery-accent hover:text-gallery-accent transition-all duration-300"
-                                >
-                                    <i className="fa-solid fa-arrow-left"></i>
-                                </button>
-
-                                {/* Responsive Image Layout */}
-                                <div className="max-h-[60vh] md:max-h-[75vh] max-w-full md:max-w-[55%] rounded-lg overflow-hidden relative group">
-                                    <img 
-                                        src={selectedWork.image} 
-                                        alt={selectedWork.title} 
-                                        className="w-full h-full max-h-full object-contain mx-auto rounded-lg"
-                                        onError={(e) => {
-                                            e.target.onerror = null;
-                                            e.target.src = "https://placehold.co/600x750/af7c44/ffffff?text=Illustration+Art";
-                                        }}
-                                    />
-                                    {/* Touch Swipe Assist Hint */}
-                                    <div className="absolute inset-x-0 bottom-4 text-center md:hidden pointer-events-none opacity-60">
-                                        <span className="bg-black/50 px-3 py-1 text-[10px] uppercase tracking-widest rounded-full">Tap Sides to Navigate</span>
-                                    </div>
-                                    
-                                    {/* Mobile Invisible Tap Nav overlays */}
-                                    <div 
-                                        className="absolute left-0 top-0 bottom-0 w-1/2 cursor-w-resize md:hidden"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            const filtered = getFilteredWorks();
-                                            const idx = filtered.findIndex(w => w.id === selectedWork.id);
-                                            const prevIdx = (idx - 1 + filtered.length) % filtered.length;
-                                            setSelectedWork(filtered[prevIdx]);
-                                        }}
-                                    ></div>
-                                    <div 
-                                        className="absolute right-0 top-0 bottom-0 w-1/2 cursor-e-resize md:hidden"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            const filtered = getFilteredWorks();
-                                            const idx = filtered.findIndex(w => w.id === selectedWork.id);
-                                            const nextIdx = (idx + 1) % filtered.length;
-                                            setSelectedWork(filtered[nextIdx]);
-                                        }}
-                                    ></div>
-                                </div>
-
-                                {/* Next/Prev Nav Arrow Desktop (Right) */}
-                                <button 
-                                    onClick={() => {
-                                        const filtered = getFilteredWorks();
-                                        const idx = filtered.findIndex(w => w.id === selectedWork.id);
-                                        const nextIdx = (idx + 1) % filtered.length;
-                                        setSelectedWork(filtered[nextIdx]);
-                                    }}
-                                    className="hidden md:flex items-center justify-center w-12 h-12 rounded-full border border-white/20 hover:border-gallery-accent hover:text-gallery-accent transition-all duration-300"
-                                >
-                                    <i className="fa-solid fa-arrow-right"></i>
-                                </button>
-
-                                {/* Technical Specifications Card */}
-                                <div className="max-w-md w-full text-left space-y-4 bg-zinc-900/50 p-6 rounded-lg border border-white/5 overflow-y-auto max-h-[25vh] md:max-h-full">
-                                    <h4 className="font-serif text-xl font-bold tracking-tight border-b border-white/10 pb-2">Technical Specs</h4>
-                                    
-                                    <div className="grid grid-cols-2 gap-y-3 text-xs md:text-sm">
-                                        <div>
-                                            <span className="text-gray-400 block uppercase tracking-wider text-[9px]">Medium</span>
-                                            <span className="font-semibold">{selectedWork.medium}</span>
-                                        </div>
-                                        <div>
-                                            <span className="text-gray-400 block uppercase tracking-wider text-[9px]">Dimensions</span>
-                                            <span className="font-semibold">{selectedWork.size}</span>
-                                        </div>
-                                        <div>
-                                            <span className="text-gray-400 block uppercase tracking-wider text-[9px]">Publication / Client</span>
-                                            <span className="font-semibold">{selectedWork.client}</span>
-                                        </div>
-                                        <div>
-                                            <span className="text-gray-400 block uppercase tracking-wider text-[9px]">Year of Release</span>
-                                            <span className="font-semibold">{selectedWork.year}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="pt-2">
-                                        <span className="text-gray-400 block uppercase tracking-wider text-[9px] mb-1">Concept narrative</span>
-                                        <p className="text-xs md:text-sm text-gray-300 leading-relaxed">
-                                            {selectedWork.description}
-                                        </p>
-                                    </div>
-
-                                    <div className="pt-4 flex space-x-3">
-                                        <button 
-                                            onClick={() => {
-                                                setSelectedWork(null);
-                                                setActiveSection('contact');
-                                            }}
-                                            className="flex-1 py-2 rounded bg-gallery-accent text-white text-[11px] font-semibold uppercase tracking-widest hover:bg-gallery-accentHover transition-colors flex items-center justify-center space-x-1.5"
-                                        >
-                                            <i className="fa-solid fa-envelope"></i>
-                                            <span>Licensing Inquiries</span>
-                                        </button>
-                                        <button 
-                                            onClick={() => {
-                                                setSelectedWork(null);
-                                                setActiveSection('store');
-                                            }}
-                                            className="px-4 py-2 rounded border border-white/20 hover:border-gallery-accent hover:text-gallery-accent transition-colors text-[11px] font-semibold uppercase tracking-widest"
-                                        >
-                                            Buy Print
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Slide Counter Footer */}
-                            <div className="text-center text-[11px] text-gray-400 font-semibold tracking-wider">
-                                USE ARROW KEYS TO NAVIGATE &bull; {getFilteredWorks().findIndex(w => w.id === selectedWork.id) + 1} OF {getFilteredWorks().length}
-                            </div>
-                        </div>
-                    )}
-
-                    {/* --- STREAMING_CHUNK: Setting Up the Checkout & Cart Drawer --- */}
-                    {/* --- SHOPPING CART SLIDE OUT DRAWER --- */}
-                    {isCartOpen && (
-                        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex justify-end animate-fade">
-                            {/* Backdrop closer */}
-                            <div className="absolute inset-0 -z-10" onClick={() => setIsCartOpen(false)}></div>
-                            
-                            <div className={`w-full max-w-md h-full shadow-2xl flex flex-col justify-between p-6 md:p-8 ${darkMode ? 'bg-gallery-darkbg text-white' : 'bg-white text-gallery-charcoal'}`}>
-                                
-                                {/* Drawer Header */}
-                                <div className="flex items-center justify-between border-b pb-4">
-                                    <div className="flex items-center space-x-2">
-                                        <i className="fa-solid fa-shopping-bag text-lg text-gallery-accent"></i>
-                                        <h3 className="font-serif text-xl font-bold">Shopping Cart</h3>
-                                    </div>
-                                    <button 
-                                        onClick={() => { setIsCartOpen(false); setCheckoutStep('cart'); }}
-                                        className="p-2 hover:text-gallery-accent transition-colors"
-                                    >
-                                        <i className="fa-solid fa-xmark text-lg"></i>
-                                    </button>
-                                </div>
-
-                                {/* Dynamic Checkout Steps content */}
-                                {checkoutStep === 'cart' && (
-                                    <div className="flex-1 my-6 overflow-y-auto space-y-4">
-                                        {cart.length === 0 ? (
-                                            <div className="text-center py-20 space-y-4">
-                                                <i className="fa-solid fa-box-open text-4xl text-gray-300"></i>
-                                                <p className="text-sm text-gray-400 font-semibold uppercase tracking-wider">Your cart is empty.</p>
-                                                <button 
-                                                    onClick={() => { setIsCartOpen(false); setActiveSection('store'); }}
-                                                    className="px-4 py-2 bg-gallery-accent text-white rounded text-[10px] uppercase tracking-widest font-bold"
-                                                >
-                                                    Browse Shop
-                                                </button>
-                                            </div>
-                                        ) : (
-                                            cart.map(item => (
-                                                <div key={item.id} className={`flex gap-4 p-3 rounded-lg border ${darkMode ? 'border-gallery-borderDark bg-zinc-900/40' : 'border-gallery-borderLight bg-gray-50'}`}>
-                                                    <div className="w-20 h-24 bg-gray-200 rounded overflow-hidden flex-shrink-0">
-                                                        <img src={item.image} alt={item.title} className="w-full h-full object-cover" />
-                                                    </div>
-                                                    <div className="flex-1 flex flex-col justify-between">
-                                                        <div>
-                                                            <div className="flex justify-between items-start">
-                                                                <h4 className="font-serif font-bold text-sm md:text-base leading-tight">{item.title}</h4>
-                                                                <button onClick={() => removeFromCart(item.id)} className="text-gray-400 hover:text-rose-500 text-xs">
-                                                                    <i className="fa-regular fa-trash-can"></i>
-                                                                </button>
-                                                            </div>
-                                                            <span className="text-[10px] text-gray-500 block">{item.size}</span>
-                                                        </div>
-                                                        <div className="flex justify-between items-center">
-                                                            <div className="flex items-center space-x-2 border rounded px-2 py-0.5 scale-90 origin-left border-gray-300 dark:border-gallery-borderDark">
-                                                                <button onClick={() => updateCartQuantity(item.id, -1)} className="text-xs hover:text-gallery-accent"><i className="fa-solid fa-minus"></i></button>
-                                                                <span className="text-xs font-bold px-1">{item.quantity}</span>
-                                                                <button onClick={() => updateCartQuantity(item.id, 1)} className="text-xs hover:text-gallery-accent"><i className="fa-solid fa-plus"></i></button>
-                                                            </div>
-                                                            <span className="font-serif text-sm font-semibold text-gallery-accent">
-                                                                ${(item.price * item.quantity).toFixed(2)}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))
-                                        )}
-                                    </div>
-                                )}
-
-                                {checkoutStep === 'shipping' && (
-                                    <div className="flex-1 my-6 overflow-y-auto space-y-4">
-                                        <h4 className="font-serif font-bold text-lg border-b pb-1">Shipping Details</h4>
-                                        <div className="space-y-3">
-                                            <input type="text" required placeholder="Full Name" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                            <input type="text" required placeholder="Street Address" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <input type="text" required placeholder="City" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                                <input type="text" required placeholder="Postal Code" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                            </div>
-                                            <input type="text" required placeholder="Country" defaultValue="United States" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                        </div>
-                                    </div>
-                                )}
-
-                                {checkoutStep === 'payment' && (
-                                    <div className="flex-1 my-6 overflow-y-auto space-y-4">
-                                        <h4 className="font-serif font-bold text-lg border-b pb-1">Payment Simulation</h4>
-                                        <div className="p-4 rounded border border-yellow-500/20 bg-yellow-500/5 text-xs text-yellow-700 dark:text-yellow-400">
-                                            <i className="fa-solid fa-shield-halved mr-1.5"></i>
-                                            Secure Sandbox payment integration enabled. Feel free to use mock numbers.
-                                        </div>
-                                        <div className="space-y-3">
-                                            <input type="text" required maxLength={19} placeholder="Card Number (4111 2222 3333 4444)" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                            <div className="grid grid-cols-2 gap-3">
-                                                <input type="text" required maxLength={5} placeholder="MM/YY" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                                <input type="password" required maxLength={3} placeholder="CVV" className="w-full px-3 py-2 border rounded-md text-xs dark:bg-zinc-900 focus:outline-none focus:border-gallery-accent" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-
-                                {checkoutStep === 'success' && (
-                                    <div className="flex-1 my-6 text-center py-10 space-y-4">
-                                        <div className="w-16 h-16 bg-emerald-500 text-white rounded-full flex items-center justify-center mx-auto text-2xl shadow-lg">
-                                            <i className="fa-solid fa-circle-check"></i>
-                                        </div>
-                                        <h3 className="font-serif text-2xl font-bold text-emerald-600 dark:text-emerald-400">Order Placed!</h3>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400 max-w-sm mx-auto">
-                                            Your mock purchase went through successfully! Md Siddiq Ali will package and ship your custom items with full protection.
-                                        </p>
-                                    </div>
-                                )}
-
-                                {/* Summary & Actions Panel */}
-                                {checkoutStep !== 'success' && cart.length > 0 && (
-                                    <div className="border-t pt-4 space-y-4">
-                                        {/* Promo Code Input */}
-                                        {checkoutStep === 'cart' && (
-                                            <div className="flex gap-2">
-                                                <input 
-                                                    type="text" 
-                                                    placeholder="Coupon Code" 
-                                                    value={couponCode}
-                                                    onChange={(e) => setCouponCode(e.target.value)}
-                                                    className="flex-1 px-3 py-1.5 text-xs rounded border dark:bg-zinc-900 focus:outline-none" 
-                                                />
-                                                <button onClick={applyCoupon} className="px-3 py-1.5 bg-gallery-accent text-white text-[10px] font-bold uppercase rounded">
-                                                    Apply
-                                                </button>
-                                            </div>
-                                        )}
-
-                                        {/* Subtotal metrics */}
-                                        <div className="space-y-1.5 text-xs">
-                                            <div className="flex justify-between text-gray-500">
-                                                <span>Subtotal</span>
-                                                <span>${cartSubtotal.toFixed(2)}</span>
-                                            </div>
-                                            {discount > 0 && (
-                                                <div className="flex justify-between text-emerald-500 font-medium">
-                                                    <span>Discount (10% Off)</span>
-                                                    <span>-${(cartSubtotal * discount).toFixed(2)}</span>
-                                                </div>
-                                            )}
-                                            <div className="flex justify-between text-gray-500">
-                                                <span>Shipping & Customs</span>
-                                                <span className="font-semibold uppercase text-emerald-500">Free</span>
-                                            </div>
-                                            <div className="flex justify-between font-serif text-base font-bold border-t pt-1.5">
-                                                <span>Total Cost</span>
-                                                <span>${finalTotal.toFixed(2)}</span>
-                                            </div>
-                                        </div>
-
-                                        {/* Action Flow controller */}
-                                        {checkoutStep === 'cart' && (
-                                            <button 
-                                                onClick={() => setCheckoutStep('shipping')}
-                                                className="w-full py-3 bg-gallery-accent hover:bg-gallery-accentHover text-white text-xs font-bold uppercase tracking-widest rounded-md"
-                                            >
-                                                Proceed to Shipping
-                                            </button>
-                                        )}
-                                        {checkoutStep === 'shipping' && (
-                                            <div className="flex gap-2">
-                                                <button onClick={() => setCheckoutStep('cart')} className="px-4 py-3 border rounded text-xs">Back</button>
-                                                <button 
-                                                    onClick={() => setCheckoutStep('payment')}
-                                                    className="flex-1 py-3 bg-gallery-accent hover:bg-gallery-accentHover text-white text-xs font-bold uppercase tracking-widest rounded"
-                                                >
-                                                    Continue to Payment
-                                                </button>
-                                            </div>
-                                        )}
-                                        {checkoutStep === 'payment' && (
-                                            <div className="flex gap-2">
-                                                <button onClick={() => setCheckoutStep('shipping')} className="px-4 py-3 border rounded text-xs">Back</button>
-                                                <button 
-                                                    onClick={() => {
-                                                        setCheckoutStep('success');
-                                                        setCart([]);
-                                                    }}
-                                                    className="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold uppercase tracking-widest rounded"
-                                                >
-                                                    Simulate Purchase
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
-                                )}
-
-                                {checkoutStep === 'success' && (
-                                    <button 
-                                        onClick={() => {
-                                            setIsCartOpen(false);
-                                            setCheckoutStep('cart');
-                                        }}
-                                        className="w-full py-3 bg-gallery-charcoal dark:bg-white text-white dark:text-gallery-charcoal text-xs font-bold uppercase tracking-widest rounded"
-                                    >
-                                        Back to Store
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    )}
+    <!-- HERO -->
+    <section id="home" class="relative h-[85vh] lg:h-screen w-full overflow-hidden bg-slate-900 text-white">
+        <div class="hero-slide opacity-100" style="background:linear-gradient(rgba(15,23,42,0.55),rgba(15,23,42,0.6)),url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=1600') center/cover no-repeat;">
+            <div class="h-full flex items-center px-8 sm:px-16 md:px-20 max-w-4xl">
+                <div class="space-y-6">
+                    <span class="inline-block text-blue-400 text-xs font-bold tracking-[0.3em] uppercase border border-blue-400/40 px-4 py-1.5 rounded-full">Welcome to my portfolio</span>
+                    <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold font-serif leading-tight text-white">Hi! <br/>I'm Abdullah</h2>
+                    <p class="text-slate-300 text-base sm:text-lg font-light tracking-wide max-w-xl leading-relaxed">Driving digital growth through data-backed marketing strategies, high-conversion campaigns, and meaningful brand storytelling.</p>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <a class="px-7 py-3 border border-white/40 text-white font-semibold tracking-wider text-xs uppercase hover:bg-white hover:text-slate-900 rounded transition duration-300" href="#contact">Meet Here <i class="fa-solid fa-briefcase ml-2"></i></a>
+                        <a class="px-7 py-3 bg-primary text-white font-semibold tracking-wider text-xs uppercase hover:bg-primaryDark rounded transition duration-300" href="#work">View Portfolio <i class="fa-solid fa-images ml-2"></i></a>
+                    </div>
                 </div>
-            );
-        }
+            </div>
+        </div>
+        <div class="hero-slide opacity-0 pointer-events-none" style="background:linear-gradient(rgba(15,23,42,0.6),rgba(15,23,42,0.65)),url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhYnEtImLi9DUotSOl6p9RlIXtU2zs-1GSO0aNFkvANBFN0XCZeCG9ENrPf33pHyq0IhfN7OnK00nf2SqrpHUfyBstv8WN8Wzyw-vPzwvlbFOzKF_PzKw1oOgoxrZSbljVhWNPiqBuDDDWoYnufH7qxArYbbPnKTeUUsOO_whyphenhyphenAYHO01kdMcMKhN4_5rnU/s16000/photo_2026-06-17_18-35-57.jpg') center/cover no-repeat;">
+            <div class="h-full flex items-center px-8 sm:px-16 md:px-20 max-w-4xl">
+                <div class="space-y-6">
+                    <span class="inline-block text-blue-400 text-xs font-bold tracking-[0.3em] uppercase border border-blue-400/40 px-4 py-1.5 rounded-full">Digital Marketing Professional</span>
+                    <h2 class="text-5xl sm:text-6xl lg:text-7xl font-bold font-serif leading-tight text-white">I am <br/>a Digital Marketer</h2>
+                    <p class="text-slate-300 text-base sm:text-lg font-light tracking-wide max-w-xl leading-relaxed">Crafting strategic digital solutions that connect brands with audiences through analytics, content excellence, and performance-driven marketing.</p>
+                    <div class="pt-2 flex flex-wrap gap-4">
+                        <a class="px-7 py-3 border border-white/40 text-white font-semibold tracking-wider text-xs uppercase hover:bg-white hover:text-slate-900 rounded transition duration-300" href="#contact">Contact Me <i class="fa-solid fa-paper-plane ml-2"></i></a>
+                        <a class="px-7 py-3 bg-primary text-white font-semibold tracking-wider text-xs uppercase hover:bg-primaryDark rounded transition duration-300" href="#" onclick="triggerCVDownload(event)">Download CV <i class="fa-solid fa-cloud-arrow-down ml-2"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex space-x-3 z-10">
+            <button class="slider-dot w-3 h-3 rounded-full bg-white scale-125 transition duration-300" onclick="triggerManualSlide(0)"></button>
+            <button class="slider-dot w-3 h-3 rounded-full bg-white/40 hover:bg-white/80 transition duration-300" onclick="triggerManualSlide(1)"></button>
+        </div>
+    </section>
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
-    </script>
+    <!-- ABOUT -->
+    <section id="about" class="py-24 px-8 sm:px-16 lg:px-20 max-w-7xl mx-auto">
+        <span class="section-label block mb-3">About</span>
+        <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-10 uppercase">Who Am I?</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+            <div class="space-y-5 text-slate-500 leading-relaxed text-[15px]">
+                <p><strong class="text-slate-700">Hi! I'm Abdullah Hazari.</strong> A passionate digital marketing professional with a strong interest in data-driven strategy, consumer behavior, and digital innovation. I enjoy transforming ideas into impactful campaigns, leveraging technology, analytics, and creative storytelling to build meaningful connections between organizations and their audiences.</p>
+                <p>My mission is simple: create sustainable digital solutions that generate value, inspire engagement, and contribute to positive social and economic outcomes. Whether through strategic marketing, data analysis, content development, or audience research, I strive to deliver measurable results while adapting to the rapidly evolving digital landscape.</p>
+            </div>
+            <div class="space-y-5 text-slate-500 leading-relaxed text-[15px]">
+                <p>Looking ahead, I plan to pursue higher education in Digital Marketing, Data Analytics, and related interdisciplinary fields to deepen my expertise and expand my global perspective. By combining academic knowledge with practical experience, I aim to develop innovative digital strategies, contribute to research-driven solutions, and help organizations make informed decisions in an increasingly connected world.</p>
+                <blockquote class="border-l-4 border-primary/50 pl-5 py-2 italic text-slate-700 font-semibold bg-blue-50/60 rounded-r-md">"Innovation begins where data, creativity, and purpose meet."</blockquote>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
+            <div class="p-6 bg-white border-b-4 border-primary shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 rounded-t-sm">
+                <div class="text-primary text-3xl mb-5"><i class="fa-solid fa-comments"></i></div>
+                <h3 class="text-base font-bold text-slate-800 mb-1">Full Member</h3>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-3">CU Debating Society (CUDS)<br/><span class="text-slate-700">2019&#8211;2021</span></p>
+                <p class="text-sm text-slate-500">Formulating logical arguments, analyzing complex motions, and fostering a culture of critical thinking and effective communication.</p>
+            </div>
+            <div class="p-6 bg-white border-b-4 border-red-500 shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 rounded-t-sm">
+                <div class="text-red-500 text-3xl mb-5"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3 class="text-base font-bold text-slate-800 mb-1">Lance Corporal</h3>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-3">BNCC Army Wing<br/><span class="text-slate-700">2019&#8211;2021</span></p>
+                <p class="text-sm text-slate-500">Engaging in field training exercises, wilderness navigation, and team-based survival drills to build character and resilience.</p>
+            </div>
+            <div class="p-6 bg-white border-b-4 border-amber-400 shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 rounded-t-sm">
+                <div class="text-amber-400 text-3xl mb-5"><i class="fa-solid fa-scale-balanced"></i></div>
+                <h3 class="text-base font-bold text-slate-800 mb-1">Member</h3>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-3">Human Rights Support Society (HRSS)<br/><span class="text-slate-700">2024&#8211;2025</span></p>
+                <p class="text-sm text-slate-500">Advocating for social justice, providing legal awareness support, and documenting human rights violations to ensure accountability.</p>
+            </div>
+            <div class="p-6 bg-white border-b-4 border-purple-500 shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 rounded-t-sm">
+                <div class="text-purple-500 text-3xl mb-5"><i class="fa-solid fa-child-reaching"></i></div>
+                <h3 class="text-base font-bold text-slate-800 mb-1">Member</h3>
+                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-bold mb-3">Love for Children<br/><span class="text-slate-700">2019&#8211;2020</span></p>
+                <p class="text-sm text-slate-500">Dedicated to empowering the next generation by providing educational opportunities, healthcare support, and sustainable development for children.</p>
+            </div>
+        </div>
+        <div class="mt-14 bg-gradient-to-r from-blue-50 to-sky-50 border-l-4 border-primary p-8 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6 rounded-r-lg shadow-sm">
+            <div class="max-w-2xl text-center md:text-left">
+                <h4 class="text-xl font-serif text-slate-800 font-bold mb-2">Strategic digital solutions for growing business.</h4>
+                <p class="text-sm text-slate-500">Need a custom solution? Let's collaborate to elevate your business presence and achieve measurable results.</p>
+            </div>
+            <a class="px-8 py-3.5 bg-primary text-white font-bold text-xs tracking-widest uppercase hover:bg-primaryDark transition duration-300 rounded whitespace-nowrap shadow-md" href="#contact">Get Started</a>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-24 bg-white px-8 sm:px-16 lg:px-20">
+        <div class="max-w-7xl mx-auto">
+            <span class="section-label block mb-3">What I Do</span>
+            <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-14 uppercase">Here are some of my expertise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <div class="bg-offwhite p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 border-t-4 border-primary">
+                    <div class="w-12 h-12 rounded-lg bg-blue-50 text-primary flex items-center justify-center text-xl mb-5"><i class="fa-regular fa-lightbulb"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Innovative Ideas</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">Providing stellar product consulting, innovative concept validation, wireframe drafting, and out-of-the-box system strategies.</p>
+                </div>
+                <div class="bg-offwhite p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 border-t-4 border-red-500">
+                    <div class="w-12 h-12 rounded-lg bg-red-50 text-red-500 flex items-center justify-center text-xl mb-5"><i class="fa-solid fa-chart-line"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Content Marketing</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">Building meaningful connections through high-quality content, expert SEO optimization, and strategic brand messaging that resonates with your audience.</p>
+                </div>
+                <div class="bg-offwhite p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 border-t-4 border-amber-400">
+                    <div class="w-12 h-12 rounded-lg bg-amber-50 text-amber-400 flex items-center justify-center text-xl mb-5"><i class="fa-solid fa-film"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Video Editing</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">Crafting cinematic narratives, seamless transitions, and professional color grading to bring your visual stories to life with precision and creativity.</p>
+                </div>
+                <div class="bg-offwhite p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 border-t-4 border-purple-500">
+                    <div class="w-12 h-12 rounded-lg bg-purple-50 text-purple-500 flex items-center justify-center text-xl mb-5"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">AI &amp; Graphic Design</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">Elevating brands through AI-driven graphic solutions, from cohesive visual identity systems and stationery design to high-end professional presentations.</p>
+                </div>
+                <div class="bg-offwhite p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 border-t-4 border-teal-500">
+                    <div class="w-12 h-12 rounded-lg bg-teal-50 text-teal-500 flex items-center justify-center text-xl mb-5"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">SEO / Marketing</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">Amplifying digital coverage via Google visibility strategies, schema styling, keywords mapping, and speed optimization audits.</p>
+                </div>
+                <div class="bg-offwhite p-8 rounded-xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition duration-300 border-t-4 border-green-500">
+                    <div class="w-12 h-12 rounded-lg bg-green-50 text-green-500 flex items-center justify-center text-xl mb-5"><i class="fa-solid fa-circle-nodes"></i></div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-2">Custom Solutions</h3>
+                    <p class="text-sm text-slate-500 leading-relaxed">Tailoring bespoke system integrations, API middleware pipelines, interactive web hooks, and security audits.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section class='relative py-24 bg-cover bg-center text-white' style='background-image: linear-gradient(rgba(44, 152, 240, 0.9), rgba(44, 152, 240, 0.9)), url(&apos;https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&amp;fit=crop&amp;q=80&amp;w=1200&apos;);'>
+        <div class="max-w-7xl mx-auto px-8 sm:px-16 lg:px-20 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div><span class="text-5xl lg:text-6xl font-bold block mb-2">30</span><span class="text-[10px] uppercase tracking-widest text-blue-200 font-bold">Co-curricular Certificates</span></div>
+            <div><span class="text-5xl lg:text-6xl font-bold block mb-2">55</span><span class="text-[10px] uppercase tracking-widest text-blue-200 font-bold">Online Courses</span></div>
+            <div><span class="text-5xl lg:text-6xl font-bold block mb-2">18</span><span class="text-[10px] uppercase tracking-widest text-blue-200 font-bold">Live Courses</span></div>
+            <div><span class="text-5xl lg:text-6xl font-bold block mb-2">5</span><span class="text-[10px] uppercase tracking-widest text-blue-200 font-bold">Years of Work Experience</span></div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="py-24 px-8 sm:px-16 lg:px-20 max-w-7xl mx-auto">
+        <span class="section-label block mb-3">My Specialty &amp;</span>
+        <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-6 uppercase">Skills</h2>
+        <p class="text-slate-500 leading-relaxed max-w-3xl text-[15px] mb-12">A snapshot of my professional competencies in digital marketing, analytics, and digital strategy. These skills reflect my commitment to continuous learning, data-driven decision-making, and creating impactful solutions in an evolving digital landscape.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-14 gap-y-8">
+            <div>
+                <div class="flex justify-between mb-2"><span class="font-semibold text-slate-700 text-sm">Digital Marketing</span><span class="font-bold text-primary text-sm">85%</span></div>
+                <div class="skill-bar h-2 rounded-full overflow-hidden"><div class="bg-primary h-full rounded-full" style="width:85%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between mb-2"><span class="font-semibold text-slate-700 text-sm">Content Marketing</span><span class="font-bold text-red-500 text-sm">85%</span></div>
+                <div class="skill-bar h-2 rounded-full overflow-hidden"><div class="bg-red-500 h-full rounded-full" style="width:85%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between mb-2"><span class="font-semibold text-slate-700 text-sm">AI Driven Web Development</span><span class="font-bold text-amber-400 text-sm">55%</span></div>
+                <div class="skill-bar h-2 rounded-full overflow-hidden"><div class="bg-amber-400 h-full rounded-full" style="width:55%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between mb-2"><span class="font-semibold text-slate-700 text-sm">Research &amp; Analysis</span><span class="font-bold text-purple-500 text-sm">80%</span></div>
+                <div class="skill-bar h-2 rounded-full overflow-hidden"><div class="bg-purple-500 h-full rounded-full" style="width:80%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between mb-2"><span class="font-semibold text-slate-700 text-sm">Public Speaking &amp; Communication</span><span class="font-bold text-teal-500 text-sm">85%</span></div>
+                <div class="skill-bar h-2 rounded-full overflow-hidden"><div class="bg-teal-500 h-full rounded-full" style="width:85%"></div></div>
+            </div>
+            <div>
+                <div class="flex justify-between mb-2"><span class="font-semibold text-slate-700 text-sm">Leadership &amp; Team Management</span><span class="font-bold text-green-500 text-sm">95%</span></div>
+                <div class="skill-bar h-2 rounded-full overflow-hidden"><div class="bg-green-500 h-full rounded-full" style="width:95%"></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section id="education" class="py-24 bg-white px-8 sm:px-16 lg:px-20">
+        <div class="max-w-7xl mx-auto">
+            <span class="section-label block mb-3">Education</span>
+            <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-12 uppercase">Education</h2>
+            <div class="max-w-4xl space-y-4">
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-offwhite shadow-sm">
+                    <button class="accordion-header w-full text-left p-6 flex justify-between items-center hover:bg-blue-50/40 transition focus:outline-none" onclick="toggleAccordion(this)">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0"><i class="fa-solid fa-graduation-cap text-sm"></i></div>
+                            <span class="font-bold text-slate-800 text-base tracking-wide">Master Degree in Political Science</span>
+                        </div>
+                        <span class="accordion-chevron w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 shrink-0"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 border-t border-slate-100 text-slate-500 leading-relaxed text-[15px] bg-white">
+                            <p class="mb-3"><strong class="text-slate-700">University of Chittagong (2022&#8211;2023)</strong></p>
+                            <p>Advanced studies focused on the intersection of Geopolitics, Digital Governance, and Diplomatic frameworks. My academic journey centers on understanding how global political shifts, regulatory policies, and the evolving technological landscape influence modern societies. I leverage these insights to bridge the gap between complex policy-making and strategic communication, ensuring all initiatives are informed by a macro-level awareness of human behavior and socio-political trends.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-offwhite shadow-sm">
+                    <button class="accordion-header w-full text-left p-6 flex justify-between items-center hover:bg-blue-50/40 transition focus:outline-none" onclick="toggleAccordion(this)">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center shrink-0"><i class="fa-solid fa-university text-sm"></i></div>
+                            <span class="font-bold text-slate-800 text-base tracking-wide">Bachelor Degree in Political Science</span>
+                        </div>
+                        <span class="accordion-chevron w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 shrink-0"><i class="fa-solid fa-chevron-down text-xs"></i></span>
+                    </button>
+                    <div class="accordion-content">
+                        <div class="p-6 border-t border-slate-100 text-slate-500 leading-relaxed text-[15px] bg-white">
+                            <p class="mb-3"><strong class="text-slate-700">University of Chittagong (2018&#8211;2022)</strong></p>
+                            <p>Focused on the core principles of governance, public policy, and political theory. This academic foundation enabled a deep understanding of analytical research, organizational structures, and the socio-political factors that shape human decision-making. I leverage these insights to approach complex problem-solving with a broad perspective, ensuring all strategic communications are grounded in sound logic and an understanding of systemic dynamics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="py-24 px-8 sm:px-16 lg:px-20 max-w-7xl mx-auto">
+        <span class="section-label block mb-3">Professional</span>
+        <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-16 uppercase">Experience</h2>
+        <div class="relative timeline-line pl-8 ml-4 sm:ml-6 space-y-12">
+            <div class="relative">
+                <div class="absolute -left-[45px] top-1.5 w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-xs ring-4 ring-offwhite shadow-md"><i class="fa-solid fa-bullhorn"></i></div>
+                <div class="bg-white hover:bg-blue-50/40 p-6 sm:p-8 rounded-xl shadow-sm border border-slate-100 transition duration-300">
+                    <span class="text-[10px] font-bold text-primary bg-primary/10 px-3 py-1 rounded-full uppercase tracking-wider">2025 &#8211; Present</span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-3 font-serif">Founder &amp; Marketing Specialist <span class="font-sans text-sm text-slate-400 font-normal">at Creatorium</span></h3>
+                    <p class="text-sm text-slate-500 mt-3 leading-relaxed">Architecting comprehensive brand strategies, scaling business growth through high-conversion performance marketing, executing SEO and multi-channel social media roadmaps, and leveraging data-driven insights to optimize ROI and accelerate market penetration.</p>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -left-[45px] top-1.5 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center text-xs ring-4 ring-offwhite shadow-md"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="bg-white hover:bg-blue-50/40 p-6 sm:p-8 rounded-xl shadow-sm border border-slate-100 transition duration-300">
+                    <span class="text-[10px] font-bold text-red-500 bg-red-50 px-3 py-1 rounded-full uppercase tracking-wider">2025 &#8211; 2026</span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-3 font-serif">Digital Marketing Executive <span class="font-sans text-sm text-slate-400 font-normal">at GENESIS</span></h3>
+                    <p class="text-sm text-slate-500 mt-3 leading-relaxed">To drive brand growth through data-driven performance marketing, SMM, social media campaigns, and audience segmentation to maximize ROI and increase lead conversion.</p>
+                </div>
+            </div>
+            <div class="relative">
+                <div class="absolute -left-[45px] top-1.5 w-8 h-8 rounded-full bg-amber-400 text-white flex items-center justify-center text-xs ring-4 ring-offwhite shadow-md"><i class="fa-solid fa-share-nodes"></i></div>
+                <div class="bg-white hover:bg-blue-50/40 p-6 sm:p-8 rounded-xl shadow-sm border border-slate-100 transition duration-300">
+                    <span class="text-[10px] font-bold text-amber-600 bg-amber-50 px-3 py-1 rounded-full uppercase tracking-wider">2021 &#8211; 2025</span>
+                    <h3 class="text-xl font-bold text-slate-800 mt-3 font-serif">Social Media Manager <span class="font-sans text-sm text-slate-400 font-normal">at Rajmoni Traders</span></h3>
+                    <p class="text-sm text-slate-500 mt-3 leading-relaxed">To develop comprehensive content strategies, managing multi-channel social media campaigns, analyzing audience engagement metrics, fostering community interaction, and optimizing platform performance to drive brand awareness.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WORK / PORTFOLIO -->
+    <section id="work" class="py-24 bg-white px-8 sm:px-16 lg:px-20">
+        <div class="max-w-7xl mx-auto">
+            <span class="section-label block mb-3">My Works &amp;</span>
+            <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-8 uppercase">Activities</h2>
+            <div class="flex flex-wrap gap-2 md:gap-6 text-xs font-bold uppercase tracking-widest border-b border-slate-200 pb-4 mb-10">
+                <button class="filter-tab pb-2 border-b-2 border-primary text-primary focus:outline-none transition-all" data-filter="all" onclick="filterPortfolio('all')">All</button>
+                <button class="filter-tab pb-2 border-b-2 border-transparent text-slate-400 hover:text-primary focus:outline-none transition-all" data-filter="Leadership" onclick="filterPortfolio('Leadership')">Leadership</button>
+                <button class="filter-tab pb-2 border-b-2 border-transparent text-slate-400 hover:text-primary focus:outline-none transition-all" data-filter="Conference" onclick="filterPortfolio('Conference')">Conference</button>
+                <button class="filter-tab pb-2 border-b-2 border-transparent text-slate-400 hover:text-primary focus:outline-none transition-all" data-filter="Co-curricular" onclick="filterPortfolio('Co-curricular')">Co-curricular</button>
+                <button class="filter-tab pb-2 border-b-2 border-transparent text-slate-400 hover:text-primary focus:outline-none transition-all" data-filter="Voluntary" onclick="filterPortfolio('Voluntary')">Voluntary</button>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="portfolio-grid">
+
+                <div class="portfolio-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Conference" data-title="Our Team Presented Poster" data-desc="International Conference on the July Revolution (ICJR-I). Our team presented a research poster exploring the digital dimensions of the July Revolution, drawing meaningful connections between social media mobilization and political transformation in Bangladesh." data-cat-label="Conference" data-cat-color="#1a56db" onclick="openWorkDetail(this)">
+                    <img alt="Work 1" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgiLKeIGAQ-qH7TyjRh0Ksj9kZ8IwsE1Ud_Ju-3qK4BC-eEf1orRPaPnalhyCn_4ekKHBlkowm2TjsAIUjB5Lp5x6P-bQ4SOQJ2Frpc4hUHKqPyWbG6ffQ1yOrd3igZdcVQlrb5xAc0TlzeAFK4pdcTlsYA1Kmzl_zMydxaH3RTSV8OitMudfEFdEOEaAY/s16000/photo_2026-06-23_10-18-56.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-blue-400 font-bold mb-1">Conference</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Our Team Presented Poster</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">International Conference on the July Revolution (ICJR-I).</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Leadership" data-title="Training Session" data-desc="Half-day training session on Leadership. Participated in an intensive half-day workshop focusing on strategic decision-making, team dynamics, and effective leadership frameworks tailored for emerging young professionals." data-cat-label="Leadership" data-cat-color="#ef4444" onclick="openWorkDetail(this)">
+                    <img alt="Work 2" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiFbhIl5ShnQ9sK0YcFVzm3J36d8aptoNRjsaEmMjXhR6InsKOBpFbYftqAXUEF_SnqhyOGiGaj37jPKKVvJGPWkipTm2sen3ycmCob3i2MfG-42_4PCmVU7PeWKT6IUmz1Ycl6MchdscJ2iNgiTOgAdDQ-u0Xi65PYCzIBvbjZI90kwGAhd94jPmPEmnc/s1280/photo_2026-06-24_11-04-46.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-red-400 font-bold mb-1">Leadership</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Training Session</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Half-day training session on Leadership.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Co-curricular" data-title="Academic Achievements" data-desc="Developing interdisciplinary frameworks for performance logic. Recognition of outstanding academic performance across multiple disciplines, combining political theory with digital strategy and analytical thinking." data-cat-label="Co-curricular" data-cat-color="#f59e0b" onclick="openWorkDetail(this)">
+                    <img alt="Work 3" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi8jELKX5ELFRQqLEpBYfbOOp575XX-zhrxJ5rwZktMZGVAtN8iKVq2dpGeK29coYzvxVb-zF_WYWSJgpEV41gos-4HOEWBydkIR0CCSuYIX6X7SJg63ZBertXQG_0FQt64ONsstfmijZPvD2JxLz4B8Pfuavub-dCadnDCrqNhT6F407p_-gpoBJJsGnk/s16000/photo_2026-06-22_10-23-35.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold mb-1">Co-curricular</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Academic Achievements</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Developing interdisciplinary frameworks for performance logic.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Voluntary" data-title="Planting Campaign" data-desc="Tree plantation at University of Chittagong. Organized and participated in a large-scale tree plantation initiative across the University of Chittagong campus, planting over 200 saplings as part of an environmental sustainability awareness drive." data-cat-label="Voluntary" data-cat-color="#a855f7" onclick="openWorkDetail(this)">
+                    <img alt="Work 4" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgSDN_GX7OcuiQv9fOSYmVCk30IsXDN0XE0i0Fgc8khNmjo0VgSu9__neihd2DKLm29nkFHA9C-xAP28l_3jzNdyejy4BgVLv3DThbQIVmwZqwp6LNFzvwh26vsnhf-gXraADKD0GpFx4blLl75YWh_1wkwH5Rxn0hVQaKiphxdgW_vhYF3eeWBL4MTz7E/s16000/2.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Voluntary</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Planting Campaign</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Tree plantation at University of Chittagong.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Conference" data-title="1st July Conference" data-desc="Speech time of Nurul Izzah Anwar. Attended the landmark 1st July Conference where distinguished speaker Nurul Izzah Anwar delivered a powerful address on democratic governance and political accountability." data-cat-label="Conference" data-cat-color="#1a56db" onclick="openWorkDetail(this)">
+                    <img alt="Work 5" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvg_nscwGeZXzrV5D1_ZWhFYpAtesOsGJ3yDlVoUauayXaKNSXmJTnNdootNxR84qBZ9wzjVhe-Ug6FmsWFgS_6EHDpSG2LhK4rw-fvIMUzFgNMBrTl_DOJVLaw9x1A_G28LALAHXwxq_XIHcH4NK-o2WfKbWePRULjVzu5O4Z4SEyP5hxJiNTViDLsjo/s16000/photo_2026-06-23_10-19-09.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-blue-400 font-bold mb-1">Conference</span>
+                        <h3 class="text-base font-bold font-serif mb-2">1st July Conference</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Speech time of Nurul Izzah Anwar.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Conference" data-title="1st July Conference" data-desc="60 paper and Poster accepted against 400 Applications. Our research paper was selected in a highly competitive process out of 400 applications, representing a significant milestone in academic achievement at the international conference." data-cat-label="Conference" data-cat-color="#a855f7" onclick="openWorkDetail(this)">
+                    <img alt="Work 6" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgbvB1xoE5ThMz1blsN2BAvfELLqVxvPkfvDxghMWyir3t69cI1QDj9rdp2WU0sfQg61QotdVHj7ZA09UFa6RNihnBiz6xLic4aJQ7BEbjrAgzet5QYP7ExQ1bfxcGNrjF_3HiHoC4r1WYuze4ebga6WncXc9uofZ7oPWwvF58_F2ehmzLrzlEXfg_xmqw/s16000/photo_2026-06-17_18-42-28.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Conference</span>
+                        <h3 class="text-base font-bold font-serif mb-2">1st July Conference</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">60 paper &amp; Poster accepted against 400 Applications.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Voluntary" data-title="Tree Planting Campaign" data-desc="Organizing community tree plantation initiatives for environmental sustainability. Led a team of volunteers to establish green corridors across residential areas, contributing to urban reforestation and environmental awareness programs." data-cat-label="Voluntary" data-cat-color="#a855f7" onclick="openWorkDetail(this)">
+                    <img alt="Tree Planting Initiative" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjPi8Qz_iYAAHMYtzlN7RJMmuX3s9d0UeqLWWndTtm4tLqY9MEE2coaRYqjJbLlbxCD0XybSaV5bgm92LvV6hwabR_sPGRh3tR0vblLHHK2eA9E3Bnj6jxeZQO0mqOF4fnfAtQdmlYB8hwt7Cj4_SEfMwmbCeMFoX3GV4cEUae6JgZCZBRh69pE4eMY8Sg/s16000/3.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Voluntary</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Tree Planting Campaign</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Organizing community tree plantation initiatives.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Voluntary" data-title="Feni Flood Rescue" data-desc="On-ground management and emergency rescue operations during severe flood crisis. Coordinated a team of volunteers during the devastating Feni floods, organizing relief supplies, rescue logistics, and emergency medical assistance for thousands of displaced families." data-cat-label="Voluntary" data-cat-color="#a855f7" onclick="openWorkDetail(this)">
+                    <img alt="Feni Flood Rescue" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjpoz_AfUQY3li9srMPBirbH9whr4X-5E6wJfyLABEivxVJ4hby6KjbSzFjNxH7hJOJrW62w6c6E_xOAG94n1ZcSlG_cRCIOkfLsqclxaRQWSkjp6ijQCXFqo45diVm9uaUQAEr1C1BKTICsEZfxFAJy6jcHFYlDUoUMvjc-ZOYCgl-UquUORFmalOnDTI/s16000/4.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Voluntary</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Feni Flood Rescue</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">On-ground management and emergency rescue operations.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Voluntary" data-title="Supporting Street Children" data-desc="Spending valuable time and distributing educational gifts to underprivileged youth. Dedicated personal time to engage with street children, distributing school supplies, books, and educational materials to encourage learning and hope for a better future." data-cat-label="Voluntary" data-cat-color="#a855f7" onclick="openWorkDetail(this)">
+                    <img alt="Time with street child" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjNkQBQF2F86DRRoMCJLB5DT81V7bUQMpqBSxt_awpjBdfc7uzxyh1WTMmlfh5r9OOtv3upfC0EbWI_CdCLMl_ZwgbcYcAWWwaVTJAewZGZl3bJVvtGmsszqVDS3I2SZhA4TrsajYuxFhpMhVyrdBf84UyHFA09-8dd_Cvo0nhhvNEDKe5LiGx3Cpt-IzQ/s16000/5.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Voluntary</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Supporting Street Children</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Distributing educational gifts to underprivileged youth.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Voluntary" data-title="Flood Relief Support" data-desc="Leading operational teams to supply vital food packs and assets to flooded districts. Mobilized community resources to deliver emergency food packages, clean water, and essential supplies to flood-affected families across multiple districts." data-cat-label="Voluntary" data-cat-color="#a855f7" onclick="openWorkDetail(this)">
+                    <img alt="Flood Rescue Team" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhWQEitYzOB5Kp05zrlAVbDUn1VeOU5RQUD6wVofliz4nBtes908MeI9GI_FG2lGTqaCwTJjmL-gmUQyEmh5yNoPPxMy1YdpEcVJY6EV_R61Bn4PJPYGL5dxhB4M1KlL6HQUGr-DO4YWJAz-EcbCWso7fKwVAmWpKksRoxzN8ESFj-Nt3OW_fuk_-jYV20/s16000/photo_2026-06-23_10-22-28.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-purple-400 font-bold mb-1">Voluntary</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Flood Relief Support</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Leading operational teams to supply vital food packs.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Leadership" data-title="10 Day Leadership Camp" data-desc="An intensive residential boot camp focusing on team building, strategy, and core management skills. Participated in a rigorous 10-day residential leadership program designed to develop executive presence, strategic thinking, and collaborative leadership skills among emerging young leaders." data-cat-label="Leadership" data-cat-color="#ef4444" onclick="openWorkDetail(this)">
+                    <img alt="10 Day Leadership Training Camp" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhc-tkd9G_lW_99bGiLLOWjjsr5m-o-P3t2v9fCJNSSJ0k53OxcICBRaqfEPg2GLB-pgpn6Re4c092qNyE1QdQbkr0HGilQ9pgeDitbLisTDYKYwkUR0p90FslTnNrzDLs4sq5RTG3Nvhu-fPTKHfigtU8GEi5IyKPM_omQCPolA4yaSEIu6ThQzOc-ZLk/s16000/Pre-College.JPG"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-red-400 font-bold mb-1">Leadership</span>
+                        <h3 class="text-base font-bold font-serif mb-2">10 Day Leadership Camp</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Intensive residential boot camp on management skills.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Leadership" data-title="Advanced Training Sessions" data-desc="Engaging in interactive presentation development and high-level strategy evaluations. Participated in advanced sessions involving high-stakes presentations, cross-functional team evaluations, and strategic analysis exercises designed to sharpen leadership acumen." data-cat-label="Leadership" data-cat-color="#ef4444" onclick="openWorkDetail(this)">
+                    <img alt="8th day of Leadership Training Camp" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFNR86scNu-JYGgc6x8r4yS-9CdHmDfZAO0MFzE-H6Cy_X6rUH_9bF3L-8zRNYCU8CWeRD3R6jp8HOortWDXmnKScvIzgt130zXWIoDFEtpYIwdRSWb5bG-V7xpfKNWmqrK4VWYlkohn1cJ1ANWetQk-mSCP3kfqeMl1_29M2uzchUk24mqPbcZ1oUPeQ/s16000/DSC06359.JPG"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-red-400 font-bold mb-1">Leadership</span>
+                        <h3 class="text-base font-bold font-serif mb-2">Advanced Training Sessions</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Interactive presentation and strategy evaluations.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Co-curricular" data-title="CUDS Annual General Meeting" data-desc="Participating in strategic evaluations, policy planning, and formal assembly sessions at Chittagong University Debating Society. As a full member, contributed to organizational planning, debating frameworks, and annual policy resolutions at the CUDS AGM." data-cat-label="Co-curricular" data-cat-color="#f59e0b" onclick="openWorkDetail(this)">
+                    <img alt="Annual General Meeting of CUDS" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj78JZOF-4K7My5SAOEel2xgqLZFnHfSapzDvrbSmZmEVU1KG_LcvWDqcwk3sv436VUmXDEzB1-2t7e3OKasZV4hWQgZm-lpafRx8A35_GsZJyYX5lPHc6xYATCuiJZ6VVHqXqvJGDYMFiklw8gpg9MVWF03JVFFkkFXFuLASehEfatvXiDEqRmUrOxMl8/s16000/photo_2026-06-23_10-23-20.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold mb-1">Co-curricular</span>
+                        <h3 class="text-base font-bold font-serif mb-2">CUDS Annual General Meeting</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Strategic evaluations and policy planning sessions.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+                <div class="portfolio-item hidden-item group relative overflow-hidden bg-slate-900 aspect-square rounded-xl shadow-md cursor-pointer" data-category="Co-curricular" data-title="7-Day BNCC Flotilla Camp" data-desc="Undergoing disciplined naval training, specialized leadership tasks, and tactical formations during the national flotilla camp assembly. An intense week-long residential camp combining naval discipline, strategic thinking, and physical endurance training under BNCC supervision." data-cat-label="Co-curricular" data-cat-color="#f59e0b" onclick="openWorkDetail(this)">
+                    <img alt="7 Day BNCC Flotilla Camp" class="w-full h-full object-cover opacity-80 transition duration-500" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjEC-VD7RyBanXO20nXhIoTBsJ3JrC62dIGR4I6LaS16iDr0jiwquvgWxhD9mOctxTusl72eM3To9dSei_ym9A9rDp9mvJm4FM8pfIQnUvxO73OW_KtA9UJxHBlmdR4XP1MZrJjVF94zvZqbJw0W5npnbNS1oE12dAEKAQwbOXot0Ogt6oPScO83nS8JO4/s16000/photo_2026-06-23_10-21-34.jpg"/>
+                    <div class="absolute inset-0 flex flex-col justify-end p-6 translate-y-6 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 text-white bg-gradient-to-t from-black/85 via-black/40 to-transparent">
+                        <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold mb-1">Co-curricular</span>
+                        <h3 class="text-base font-bold font-serif mb-2">7-Day BNCC Flotilla Camp</h3>
+                        <p class="text-xs text-slate-300 font-light mb-3">Naval training and tactical formations at national camp.</p>
+                        <span class="text-xs text-blue-300 font-semibold flex items-center gap-1"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i> Click to view details</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- See More Button -->
+            <div class="text-center mt-10" id="see-more-container">
+                <button id="see-more-btn" onclick="toggleSeeMore()" class="inline-flex items-center gap-2 px-8 py-3.5 border-2 border-primary text-primary font-bold text-xs tracking-widest uppercase hover:bg-primary hover:text-white rounded-lg transition duration-300">
+                    See More Work <i class="fa-solid fa-grid-2 ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOG -->
+    <section id="blog" class="py-24 px-8 sm:px-16 lg:px-20 max-w-7xl mx-auto">
+        <span class="section-label block mb-3">Read</span>
+        <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-12 uppercase">Blog</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <article class="blog-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm flex flex-col">
+                <div class="h-52 overflow-hidden relative cursor-pointer" onclick="openFullBlogPost('blog_1')">
+                    <img alt="Why Web Design Matters" class="w-full h-full object-cover hover:scale-105 transition duration-500" src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=500"/>
+                    <span class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">Design</span>
+                </div>
+                <div class="p-6 flex flex-col flex-1">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3"><i class="fa-regular fa-calendar-days mr-1.5"></i>June 22, 2026</span>
+                    <h3 class="text-lg font-bold text-slate-800 font-serif leading-snug mb-3 hover:text-primary transition cursor-pointer" onclick="openFullBlogPost('blog_1')">Why Web Design Matters More Than Ever</h3>
+                    <p class="text-sm text-slate-500 mb-5 leading-relaxed flex-1">Evaluating clean typography parameters, dynamic color combinations, and intuitive touch guidelines to dramatically boost conversions and create lasting user experiences that drive engagement.</p>
+                    <button class="self-start text-[11px] font-bold uppercase tracking-wider text-primary hover:text-primaryDark flex items-center gap-1.5 focus:outline-none border border-primary/30 px-4 py-2 rounded-lg hover:bg-blue-50 transition" onclick="openFullBlogPost('blog_1')">Read Article <i class="fa-solid fa-arrow-right-long"></i></button>
+                </div>
+            </article>
+            <article class="blog-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm flex flex-col">
+                <div class="h-52 overflow-hidden relative cursor-pointer" onclick="openFullBlogPost('blog_2')">
+                    <img alt="The Evolution of Modern Tech Stacks" class="w-full h-full object-cover hover:scale-105 transition duration-500" src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=500"/>
+                    <span class="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">Tech</span>
+                </div>
+                <div class="p-6 flex flex-col flex-1">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3"><i class="fa-regular fa-calendar-days mr-1.5"></i>May 18, 2026</span>
+                    <h3 class="text-lg font-bold text-slate-800 font-serif leading-snug mb-3 hover:text-red-500 transition cursor-pointer" onclick="openFullBlogPost('blog_2')">The Evolution of Modern Tech Stacks</h3>
+                    <p class="text-sm text-slate-500 mb-5 leading-relaxed flex-1">A transition analysis comparing modern utility workflows with native semantic components. How software has shifted from heavy monolithic pipelines to unified, rapid, component-driven ecosystems.</p>
+                    <button class="self-start text-[11px] font-bold uppercase tracking-wider text-red-500 hover:text-red-600 flex items-center gap-1.5 focus:outline-none border border-red-200 px-4 py-2 rounded-lg hover:bg-red-50 transition" onclick="openFullBlogPost('blog_2')">Read Article <i class="fa-solid fa-arrow-right-long"></i></button>
+                </div>
+            </article>
+            <article class="blog-card bg-white rounded-2xl overflow-hidden border border-slate-100 shadow-sm flex flex-col">
+                <div class="h-52 overflow-hidden relative cursor-pointer" onclick="openFullBlogPost('blog_3')">
+                    <img alt="Tips for Beautiful Corporate Portfolios" class="w-full h-full object-cover hover:scale-105 transition duration-500" src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=500"/>
+                    <span class="absolute top-4 left-4 text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full" style="background:#d97706">Branding</span>
+                </div>
+                <div class="p-6 flex flex-col flex-1">
+                    <span class="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-3"><i class="fa-regular fa-calendar-days mr-1.5"></i>April 05, 2026</span>
+                    <h3 class="text-lg font-bold text-slate-800 font-serif leading-snug mb-3 hover:text-amber-600 transition cursor-pointer" onclick="openFullBlogPost('blog_3')">Tips for Beautiful Corporate Portfolios</h3>
+                    <p class="text-sm text-slate-500 mb-5 leading-relaxed flex-1">How choosing color-coded borders, side sticky navigations, and structured timelines triggers instant employer attention. Your portfolio is your most valuable brand asset — learn how to make it work 24/7.</p>
+                    <button class="self-start text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 focus:outline-none border px-4 py-2 rounded-lg hover:bg-amber-50 transition" onclick="openFullBlogPost('blog_3')" style="color:#d97706;border-color:#fde68a">Read Article <i class="fa-solid fa-arrow-right-long"></i></button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 bg-white px-8 sm:px-16 lg:px-20">
+        <div class="max-w-7xl mx-auto">
+            <span class="section-label block mb-3">Get in Touch</span>
+            <h2 class="text-3xl font-serif font-bold text-slate-800 tracking-wide mb-12 uppercase">Contact</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+                <div class="lg:col-span-2 space-y-5">
+                    <a class="contact-card flex items-center gap-5 p-5 bg-offwhite rounded-xl border border-slate-100 hover:border-primary/30" href="mailto:abdullahcu54@gmail.com">
+                        <div class="w-12 h-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center text-lg shrink-0"><i class="fa-regular fa-envelope"></i></div>
+                        <div><h4 class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Email Me</h4><p class="text-sm font-bold text-slate-700 mt-0.5">abdullahcu54@gmail.com</p></div>
+                    </a>
+                    <a class="contact-card flex items-center gap-5 p-5 bg-offwhite rounded-xl border border-slate-100 hover:border-red-200" href="tel:+8801518962973">
+                        <div class="w-12 h-12 rounded-xl bg-red-50 text-red-500 flex items-center justify-center text-lg shrink-0"><i class="fa-solid fa-mobile-screen"></i></div>
+                        <div><h4 class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Call Me</h4><p class="text-sm font-bold text-slate-700 mt-0.5">+880 1518 962 973</p></div>
+                    </a>
+                    <a class="contact-card flex items-center gap-5 p-5 bg-offwhite rounded-xl border border-slate-100 hover:border-amber-200" href="https://maps.app.goo.gl/TW5GdRVJ1x7BXayw8" target="_blank">
+                        <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-500 flex items-center justify-center text-lg shrink-0"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <div><h4 class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">Location</h4><p class="text-sm font-bold text-slate-700 mt-0.5">Dhaka, Bangladesh</p></div>
+                    </a>
+                </div>
+                <div class="lg:col-span-3 bg-offwhite p-8 rounded-2xl border border-slate-200 shadow-sm">
+                    <form id="contact-form" class="space-y-5" onsubmit="handleContactSubmit(event)">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-2">Your Name</label>
+                                <input class="w-full px-4 py-3 bg-white border border-slate-200 focus:outline-none focus:border-primary rounded-lg transition text-sm" name="name" placeholder="Abdullah Hazari" required type="text"/>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-2">Your Email</label>
+                                <input class="w-full px-4 py-3 bg-white border border-slate-200 focus:outline-none focus:border-primary rounded-lg transition text-sm" name="email" placeholder="abdullahcu54@gmail.com" required type="email"/>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-2">Subject</label>
+                            <input class="w-full px-4 py-3 bg-white border border-slate-200 focus:outline-none focus:border-primary rounded-lg transition text-sm" name="subject" placeholder="Project Inquiry" required type="text"/>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-wider font-bold text-slate-500 mb-2">Message</label>
+                            <textarea class="w-full px-4 py-3 bg-white border border-slate-200 focus:outline-none focus:border-primary rounded-lg transition text-sm resize-none" name="message" placeholder="Let's build something fantastic together..." required rows="5"></textarea>
+                        </div>
+                        <button class="px-8 py-3.5 bg-primary text-white font-bold text-xs tracking-widest uppercase hover:bg-primaryDark rounded-lg transition duration-300 shadow-md" type="submit">Send Message <i class="fa-solid fa-paper-plane ml-2"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- TOAST -->
+<div id="toast-message" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-6 py-4 rounded-xl shadow-2xl opacity-0 translate-y-10 pointer-events-none flex items-center space-x-3 max-w-sm">
+    <div class="text-primary text-lg" id="toast-icon"><i class="fa-solid fa-circle-check"></i></div>
+    <div class="text-sm font-semibold" id="toast-text">Message sent successfully!</div>
+</div>
+
+<!-- WORK DETAIL OVERLAY -->
+<div id="work-detail-overlay" class="fixed inset-0 bg-white z-50 overflow-y-auto">
+    <header class="sticky top-0 bg-white border-b border-slate-100 py-4 px-6 sm:px-12 flex justify-between items-center z-10 shadow-sm">
+        <button onclick="closeWorkDetail()" class="flex items-center gap-2 text-slate-600 hover:text-primary font-bold text-sm tracking-widest uppercase transition">
+            <i class="fa-solid fa-arrow-left"></i> Back to Works
+        </button>
+        <span class="text-xs font-bold text-slate-400 tracking-widest uppercase hidden sm:inline">Abdullah Hazari &mdash; Work Detail</span>
+    </header>
+    <div class="max-w-4xl mx-auto px-6 sm:px-12 py-12 sm:py-20">
+        <div id="work-detail-cat" class="text-xs font-bold uppercase tracking-widest mb-4"></div>
+        <h1 id="work-detail-title" class="text-3xl sm:text-5xl font-serif font-bold text-slate-800 leading-tight mb-8"></h1>
+        <div class="w-full h-64 sm:h-[420px] rounded-2xl overflow-hidden mb-10 shadow-lg">
+            <img id="work-detail-img" class="w-full h-full object-cover" src="" alt="Work Detail"/>
+        </div>
+        <p id="work-detail-desc" class="text-slate-600 text-base sm:text-lg leading-relaxed"></p>
+    </div>
+</div>
+
+<!-- BLOG READER OVERLAY -->
+<div id="blog-reader" class="fixed inset-0 bg-white z-50 overflow-y-auto">
+    <header class="sticky top-0 bg-white border-b border-slate-100 py-4 px-6 sm:px-12 flex justify-between items-center z-10 shadow-sm">
+        <button onclick="closeFullBlogPost()" class="flex items-center gap-2 text-slate-600 hover:text-primary font-bold text-sm tracking-widest uppercase transition">
+            <i class="fa-solid fa-arrow-left"></i> Back to Portfolio
+        </button>
+        <span class="text-xs font-bold text-slate-400 tracking-widest uppercase hidden sm:inline">Abdullah Hazari &mdash; Blog</span>
+    </header>
+    <article class="max-w-4xl mx-auto px-6 sm:px-12 py-12 sm:py-20">
+        <div class="text-xs font-bold uppercase tracking-widest mb-4" id="reader-category"></div>
+        <h1 class="text-3xl sm:text-5xl font-serif font-bold text-slate-800 leading-tight mb-6" id="reader-title"></h1>
+        <div class="flex flex-wrap items-center gap-4 text-xs text-slate-400 font-bold uppercase pb-8 border-b border-slate-100 mb-8" id="reader-meta"></div>
+        <div class="w-full h-64 sm:h-[400px] rounded-2xl overflow-hidden mb-12 shadow-md">
+            <img id="reader-img" class="w-full h-full object-cover" src="" alt="Blog Image"/>
+        </div>
+        <div id="reader-content" class="text-slate-600 text-base sm:text-lg leading-relaxed space-y-6 max-w-none"></div>
+        <div class="mt-20 pt-12 border-t border-slate-200">
+            <div class="p-8 sm:p-12 bg-gradient-to-r from-blue-50 to-sky-50 rounded-2xl flex flex-col md:flex-row justify-between items-center gap-8 border border-blue-100">
+                <div class="max-w-md text-center md:text-left">
+                    <h4 class="text-xl sm:text-2xl font-serif text-slate-800 font-bold mb-2">Subscribe to our publication</h4>
+                    <p class="text-sm text-slate-500">Get the latest analytics strategy, marketing case studies, and corporate designs straight to your inbox.</p>
+                </div>
+                <div class="w-full md:w-auto flex flex-col sm:flex-row gap-3">
+                    <input type="email" placeholder="you@example.com" class="px-4 py-3 bg-white border border-slate-200 rounded-lg text-sm focus:outline-none w-full sm:w-64"/>
+                    <button onclick="triggerNewsletterToast()" class="px-6 py-3 bg-primary text-white font-bold text-xs tracking-widest uppercase hover:bg-primaryDark rounded-lg transition shrink-0">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+
+<script>
+// Sidebar
+const sidebar = document.getElementById('sidebar');
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const sidebarOverlay = document.getElementById('sidebar-overlay');
+hamburgerBtn.addEventListener('click', () => { sidebar.classList.toggle('-translate-x-full'); sidebarOverlay.classList.toggle('hidden'); });
+sidebarOverlay.addEventListener('click', closeSidebarMobile);
+function closeSidebarMobile() { sidebar.classList.add('-translate-x-full'); sidebarOverlay.classList.add('hidden'); }
+
+// Hero Slider
+let currentSlide = 0;
+const slides = document.querySelectorAll('.hero-slide');
+const dots = document.querySelectorAll('.slider-dot');
+function showSlide(index) {
+    slides.forEach((s,i) => { s.classList.toggle('opacity-100',i===index); s.classList.toggle('opacity-0',i!==index); s.classList.toggle('pointer-events-none',i!==index); });
+    dots.forEach((d,i) => { d.classList.toggle('bg-white',i===index); d.classList.toggle('scale-125',i===index); d.classList.toggle('bg-white/40',i!==index); });
+}
+function triggerManualSlide(i) { currentSlide=i; showSlide(i); }
+setInterval(() => { currentSlide=(currentSlide+1)%slides.length; showSlide(currentSlide); }, 5000);
+
+// Portfolio Filter + See More
+let showingAll = false;
+function filterPortfolio(cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => {
+        const a = t.dataset.filter===cat;
+        t.classList.toggle('border-primary',a); t.classList.toggle('text-primary',a);
+        t.classList.toggle('border-transparent',!a); t.classList.toggle('text-slate-400',!a);
+    });
+    const items = document.querySelectorAll('.portfolio-item');
+    showingAll = false;
+    let count = 0;
+    items.forEach(item => {
+        const match = cat==='all' || item.dataset.category===cat;
+        if (match) {
+            count++;
+            item.style.display = count<=6 ? '' : 'none';
+            if (count<=6) item.classList.remove('hidden-item'); else item.classList.add('hidden-item');
+        } else { item.style.display='none'; }
+    });
+    const total = [...items].filter(i => cat==='all' || i.dataset.category===cat).length;
+    const sm = document.getElementById('see-more-container');
+    sm.style.display = total>6 ? 'block' : 'none';
+    document.getElementById('see-more-btn').innerHTML = 'See More Work <i class="fa-solid fa-grid-2 ml-1"></i>';
+}
+function toggleSeeMore() {
+    const items = document.querySelectorAll('.portfolio-item');
+    const btn = document.getElementById('see-more-btn');
+    const f = document.querySelector('.filter-tab.border-primary')?.dataset.filter || 'all';
+    if (!showingAll) {
+        items.forEach(item => { if (f==='all'||item.dataset.category===f) { item.classList.remove('hidden-item'); item.style.display=''; } });
+        btn.innerHTML = 'Show Less <i class="fa-solid fa-chevron-up ml-1"></i>';
+        showingAll = true;
+    } else { filterPortfolio(f); }
+}
+
+// Work Detail
+function openWorkDetail(el) {
+    document.getElementById('work-detail-title').textContent = el.dataset.title;
+    document.getElementById('work-detail-desc').textContent = el.dataset.desc;
+    document.getElementById('work-detail-cat').textContent = el.dataset.catLabel;
+    document.getElementById('work-detail-cat').style.color = el.dataset.catColor;
+    document.getElementById('work-detail-img').src = el.querySelector('img').src;
+    const o = document.getElementById('work-detail-overlay');
+    o.classList.add('open'); o.scrollTop=0;
+    document.body.classList.add('overflow-hidden');
+}
+function closeWorkDetail() { document.getElementById('work-detail-overlay').classList.remove('open'); document.body.classList.remove('overflow-hidden'); }
+
+// Accordion
+function toggleAccordion(btn) {
+    const content = btn.nextElementSibling;
+    const chevron = btn.querySelector('.accordion-chevron');
+    const isOpen = content.classList.contains('open');
+    document.querySelectorAll('.accordion-content').forEach(c => c.classList.remove('open'));
+    document.querySelectorAll('.accordion-chevron').forEach(c => c.classList.remove('rotated'));
+    if (!isOpen) { content.classList.add('open'); chevron.classList.add('rotated'); }
+}
+
+// Blog Reader
+const fullBlogData = {
+    blog_1: {
+        title:"Why Web Design Matters More Than Ever", category:"Design", catColor:"#1a56db",
+        meta:"<span><i class='fa-regular fa-calendar-days'></i>&nbsp;June 22, 2026</span><span>&nbsp;&bull;&nbsp;</span><span><i class='fa-regular fa-clock'></i>&nbsp;8 Min Read</span><span>&nbsp;&bull;&nbsp;</span><span>By Abdullah Hazari</span>",
+        img:"https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=1200",
+        content:`<p class="font-semibold text-lg text-slate-800">In a world where the average user forms an opinion in under 50 milliseconds, design is no longer an afterthought &mdash; it is the strategy itself.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">The Psychology Behind First Impressions</h2>
+        <p>Studies in cognitive perception consistently demonstrate that visual hierarchy and spatial reasoning activate instant emotional responses. Web design isn't simply aesthetic; it is the architecture of persuasion &mdash; shaping how users feel, trust, and ultimately act when they encounter your digital presence.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">Typography as Communication</h2>
+        <p>Choosing the right typeface carries more weight than most brands realize. Serif fonts evoke authority and tradition; sans-serif communicates modernity and approachability. In digital marketing, your font selection subconsciously signals whether you are a trusted institution or a cutting-edge innovator &mdash; a choice that directly influences conversion rates.</p>
+        <blockquote class="border-l-4 border-primary pl-5 py-3 italic my-8 bg-blue-50 text-slate-700 rounded-r-lg">"Design is not just what it looks like and feels like. Design is how it works." &mdash; Steve Jobs</blockquote>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">Responsive Design and Mobile-First Thinking</h2>
+        <p>With over 60% of global web traffic originating from mobile devices, designing for smaller screens is no longer optional. A responsive, adaptive layout ensures your content reaches every user regardless of device &mdash; protecting your reach, your credibility, and your conversions in equal measure.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">Color Psychology in Marketing</h2>
+        <p>Blue communicates trust and professionalism. Red triggers urgency and passion, while green signals growth and harmony. Understanding these associations allows marketers to make deliberate choices that reinforce brand identity at every touchpoint.</p>`
+    },
+    blog_2: {
+        title:"The Evolution of Modern Tech Stacks", category:"Tech", catColor:"#ef4444",
+        meta:"<span><i class='fa-regular fa-calendar-days'></i>&nbsp;May 18, 2026</span><span>&nbsp;&bull;&nbsp;</span><span><i class='fa-regular fa-clock'></i>&nbsp;7 Min Read</span><span>&nbsp;&bull;&nbsp;</span><span>By Abdullah Hazari</span>",
+        img:"https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&q=80&w=1200",
+        content:`<p class="font-semibold text-lg text-slate-800">Building software has shifted from heavy monolithic pipelines to unified, rapid, utility-first ecosystems that prioritize speed, modularity, and developer experience.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">From Legacy Frameworks to Component-Driven Logic</h2>
+        <p>In early eras, web structures relied on fragmented, massive script databases that introduced rendering latency. Today, modular single-file environments allow engineering teams to write isolated, reactive, clean segments of logic which compile instantaneously into ultra-fast user experiences. The shift reflects a fundamental change in how teams collaborate and deliver.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">The Triumph of Utility-First CSS</h2>
+        <p>Why did utility frameworks conquer standard styles? By declaring parameters directly inside responsive elements, you completely eliminate styling duplication, reduce file weight significantly, and force visual consistency across multiple display models. Tools like Tailwind CSS have democratized high-quality design by enabling developers to build production-grade interfaces without writing custom CSS.</p>
+        <blockquote class="border-l-4 border-red-400 pl-5 py-3 italic my-8 bg-red-50 text-slate-700 rounded-r-lg">"Utility classes are more than a technical shortcut; they represent a fundamental paradigm shift towards rapid, maintainable design systems."</blockquote>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">API Middleware Sync</h2>
+        <p>In 2026, seamless backend synchronization is expected. Frontends are dynamic templates which render real-time, cached information on the fly via robust API interfaces, assuring maximum offline durability and high-end cybersecurity metrics. The emergence of edge computing further reduces latency, bringing data processing closer to the end user than ever before.</p>`
+    },
+    blog_3: {
+        title:"Tips for Beautiful Corporate Portfolios", category:"Branding", catColor:"#d97706",
+        meta:"<span><i class='fa-regular fa-calendar-days'></i>&nbsp;April 05, 2026</span><span>&nbsp;&bull;&nbsp;</span><span><i class='fa-regular fa-clock'></i>&nbsp;10 Min Read</span><span>&nbsp;&bull;&nbsp;</span><span>By Abdullah Hazari</span>",
+        img:"https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200",
+        content:`<p class="font-semibold text-lg text-slate-800">Your professional portfolio is the single most valuable brand asset you own. It sells your capabilities 24 hours a day, seven days a week &mdash; even while you sleep.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">Choosing Structured Visual Chronology</h2>
+        <p>Modern recruiters spend under 10 seconds reviewing a portfolio. To immediately capture their attention, you must structure experience values clearly. By presenting structured, color-coded markers &mdash; such as timeline entries anchored by distinct accent colors &mdash; you lead their eyes through your progression seamlessly, making your story effortless to follow and remember.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">The Power of Consistent Branding</h2>
+        <p>A portfolio without a consistent visual identity feels fragmented and unreliable. Selecting a primary color palette (no more than three colors), a consistent typographic hierarchy, and unified spacing creates an experience of coherence that signals professionalism and attention to detail &mdash; qualities every employer and client values above all else.</p>
+        <blockquote class="border-l-4 border-amber-400 pl-5 py-3 italic my-8 bg-amber-50 text-slate-700 rounded-r-lg">"A successful portfolio does not just show what you made. It clearly communicates the structural logic behind your solutions."</blockquote>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">The Magic of Category-Filtered Displays</h2>
+        <p>Do not throw all projects into a single messy heap. By allowing target viewers to isolate key segments &mdash; such as Leadership, Conferences, or Voluntary work &mdash; you empower them to find relevant work in single clicks, dramatically increasing hire potential and reducing cognitive load on your audience.</p>
+        <h2 class="text-2xl font-serif font-bold text-slate-800 mt-10 mb-4">Mobile Optimization is Non-Negotiable</h2>
+        <p>Over half of portfolio views now occur on mobile devices. A portfolio that fails to adapt to smaller screens immediately signals a lack of technical awareness. Prioritizing responsive design, fast image loading, and touch-friendly navigation is the baseline expectation of any serious professional presentation in 2026.</p>`
+    }
+};
+function openFullBlogPost(postId) {
+    const data = fullBlogData[postId]; if(!data) return;
+    document.getElementById('reader-category').textContent = data.category;
+    document.getElementById('reader-category').style.color = data.catColor;
+    document.getElementById('reader-title').textContent = data.title;
+    document.getElementById('reader-meta').innerHTML = data.meta;
+    document.getElementById('reader-img').src = data.img;
+    document.getElementById('reader-content').innerHTML = data.content;
+    const r = document.getElementById('blog-reader');
+    r.classList.add('open'); r.scrollTop=0;
+    document.body.classList.add('overflow-hidden');
+}
+function closeFullBlogPost() { document.getElementById('blog-reader').classList.remove('open'); document.body.classList.remove('overflow-hidden'); }
+
+// Toast
+function triggerToast(msg, icon, color) {
+    const t = document.getElementById('toast-message');
+    document.getElementById('toast-text').textContent = msg;
+    document.getElementById('toast-icon').innerHTML = `<i class="fa-solid ${icon}"></i>`;
+    document.getElementById('toast-icon').style.color = color||'#1a56db';
+    t.classList.remove('opacity-0','translate-y-10','pointer-events-none');
+    t.classList.add('opacity-100','translate-y-0');
+    setTimeout(() => { t.classList.add('opacity-0','translate-y-10','pointer-events-none'); t.classList.remove('opacity-100','translate-y-0'); }, 4000);
+}
+function triggerNewsletterToast() { triggerToast("Thank you! You've successfully subscribed.", "fa-circle-check", "#1a56db"); }
+function handleContactSubmit(e) { e.preventDefault(); triggerToast("Your message was sent successfully!", "fa-circle-check", "#1a56db"); e.target.reset(); }
+function triggerCVDownload(e) { e.preventDefault(); triggerToast("CV download will be available soon.", "fa-circle-info", "#1a56db"); }
+
+// Active Nav
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar-link');
+const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if(entry.isIntersecting) { const id=entry.target.getAttribute('id'); navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href')===`#${id}`)); } });
+}, { rootMargin:'-20% 0px -60% 0px', threshold:0 });
+sections.forEach(s => obs.observe(s));
+
+window.onload = function() {
+    const first = document.querySelector('.accordion-header');
+    if(first) toggleAccordion(first);
+    filterPortfolio('all');
+};
+</script>
 </body>
 </html>
